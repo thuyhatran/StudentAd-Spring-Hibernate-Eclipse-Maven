@@ -8,6 +8,9 @@ package com.studentadm.service;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.studentadm.dao.studentDao;
 import com.studentadm.model.Student;
 import com.studentadm.model.StudentsGrade;
@@ -16,6 +19,7 @@ import com.studentadm.model.StudentsGrade;
  *
  * @author Administrator
  */
+@Service("studentService")
 public class studentService implements studentServiceInterface{
     
     private static studentDao stDao;
@@ -24,83 +28,91 @@ public class studentService implements studentServiceInterface{
         stDao = new studentDao();
     }
     
-  @Override
+    
+    @Override
+    @Transactional
     public void insert(Student entity) {
-        stDao.openCurrentSessionwithTransaction();
+
         stDao.insert(entity);
-        stDao.closeCurrentSessionwithTransaction();
+
     }
 
     @Override
+    @Transactional
     public void update(Student entity) {
-        stDao.openCurrentSessionwithTransaction();
+
         stDao.update(entity);
-        stDao.closeCurrentSessionwithTransaction();  
+
     }
 
     @Override
+    @Transactional
     public Student selectById(int id) {
-        stDao.openCurrentSession();
+
         Student st = stDao.selectById(id);
-        stDao.closeCurrentSession();
+
         return st; 
     }
 
     @Override
+    @Transactional
     public void delete(int id) {
-        stDao.openCurrentSessionwithTransaction();
+
 	Student st = stDao.selectById(id);
 	stDao.delete(st);
-	stDao.closeCurrentSessionwithTransaction();
+
     }
 
     @Override
+    @Transactional
     public List<Student> select() {
-        stDao.openCurrentSession();
+
         List<Student> students = stDao.select();
-	stDao.closeCurrentSession();
+
         return students;
     }
     
      @Override
+     @Transactional
     public int getNewStudentID() {
         
-        stDao.openCurrentSession();
         int curID = stDao.getNewStudentID();
-        stDao.closeCurrentSession();
         
         return curID;    
     }
 
     
     @Override
+    @Transactional
     public void write_to_file(String filename)  {
-        stDao.openCurrentSession();
+
         stDao.write_to_file(filename);
-        stDao.closeCurrentSession();  
 
     }
 
     @Override
+    @Transactional
     public void insert_from_file(String filename) {
-        stDao.openCurrentSessionwithTransaction();
+
         stDao.insert_from_file(filename);
-        stDao.closeCurrentSessionwithTransaction(); 
+
     } 
 
     @Override
+    @Transactional
     public List<StudentsGrade> getGrades() {
-        stDao.openCurrentSession();
+
         List<StudentsGrade> student_Grades = stDao.getGrades();
-        stDao.closeCurrentSession(); 
+
         return student_Grades;
     }
 
     @Override
+    @Transactional
     public List<StudentsGrade> getTranscript(int student_id) {
-        stDao.openCurrentSession();
+
         List<StudentsGrade> student_Grades = stDao.getTranscript(student_id);
-        stDao.closeCurrentSession(); 
+
         return student_Grades;
     }
          

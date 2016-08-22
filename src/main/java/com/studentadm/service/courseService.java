@@ -8,6 +8,9 @@ package com.studentadm.service;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.studentadm.dao.courseDao;
 import com.studentadm.model.Course;
 
@@ -15,79 +18,91 @@ import com.studentadm.model.Course;
  *
  * @author Administrator
  */
+
+@Service("courseService")
 public class courseService implements courseServiceInterface{
     
-    private static courseDao stDao;
+    private static courseDao crsDao;
 
-    public courseService() {
-        stDao = new courseDao();
-    }
+   public courseService() {
+	        crsDao = new courseDao();
+	    }
     
-  @Override
+  
+    
+    @Override
+    @Transactional
     public void insert(Course entity) {
-        stDao.openCurrentSessionwithTransaction();
-        stDao.insert(entity);
-        stDao.closeCurrentSessionwithTransaction();
+        crsDao.insert(entity);
     }
 
-    @Override
+ 
+
+	public static void setCrsDao(courseDao crsDao) {
+		courseService.crsDao = crsDao;
+	}
+
+
+
+	@Override
+    @Transactional
     public void update(Course entity) {
-        stDao.openCurrentSessionwithTransaction();
-        stDao.update(entity);
-        stDao.closeCurrentSessionwithTransaction();  
+        
+        crsDao.update(entity);
+          
     }
 
     @Override
+    @Transactional
     public Course selectById(int id) {
-        stDao.openCurrentSession();
-        Course st = (Course) stDao.selectById(id);
-        stDao.closeCurrentSession();
+        
+        Course st = (Course) crsDao.selectById(id);
+        
         return st; 
     }
 
     @Override
+    @Transactional
     public void delete(int id) {
-        stDao.openCurrentSessionwithTransaction();
-	Course st = stDao.selectById(id);
-	stDao.delete(st);
-	stDao.closeCurrentSessionwithTransaction();
+        
+		Course st = crsDao.selectById(id);
+		crsDao.delete(st);
+	
     }
 
     @Override
+    @Transactional
     public List<Course> select() {
-        stDao.openCurrentSession();
-        List<Course> course = stDao.select();
-	stDao.closeCurrentSession();
+        
+        List<Course> course = crsDao.select();
+	
         return course;
     }
     
-       @Override
+    @Override
+    @Transactional
     public int getNewCourseID() {
-        
-        stDao.openCurrentSession();
-        int curID = stDao.getNewCourseID();
-        stDao.closeCurrentSession();
-        
+               
+        int curID = crsDao.getNewCourseID();
+     
         return curID;
         
     }
     
     @Override
+    @Transactional
     public void write_to_file(String filename)  {
-        stDao.openCurrentSession();
-        stDao.write_to_file(filename);
-        stDao.closeCurrentSession();  
         
-       
+        crsDao.write_to_file(filename);
+        
     }
 
     @Override
+    @Transactional
     public void insert_from_file(String filename) {
-        stDao.openCurrentSessionwithTransaction();
-        stDao.insert_from_file(filename);
-        stDao.closeCurrentSessionwithTransaction(); 
+       
+        crsDao.insert_from_file(filename);
      
-    } 
-    
+    }     
     
 }

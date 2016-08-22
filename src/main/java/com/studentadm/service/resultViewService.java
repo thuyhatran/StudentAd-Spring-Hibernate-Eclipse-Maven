@@ -11,10 +11,14 @@ import com.studentadm.dao.resultDao;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 /**
  *
  * @author thuyha
  */
+@Service("resultViewService")
 public class resultViewService implements resultViewServiceInterface{
     
     private static resultDao stDao;
@@ -24,10 +28,11 @@ public class resultViewService implements resultViewServiceInterface{
     }
         
     @Override
+    @Transactional
     public Results_view selectById(int st_id, int crs_id) {
-        stDao.openCurrentSession();
+
         Results st = stDao.selectById(st_id, crs_id);
-        stDao.closeCurrentSession();
+
         Results_view rls_view = new Results_view(st);
         return rls_view; 
     }
@@ -35,10 +40,10 @@ public class resultViewService implements resultViewServiceInterface{
 
 
     @Override
+    @Transactional
     public List<Results_view> select() {
-         stDao.openCurrentSession();
+
         List<Results> results = stDao.select();
-	stDao.closeCurrentSession();
         
         List<Results_view> results_view = new ArrayList<>();
         Results_view result_view = null;

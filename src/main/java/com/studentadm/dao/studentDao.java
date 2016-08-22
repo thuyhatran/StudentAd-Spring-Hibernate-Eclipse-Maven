@@ -2,10 +2,6 @@ package com.studentadm.dao;
 
 
 
-import com.studentadm.model.Student;
-import com.studentadm.model.StudentsGrade;
-import com.studentadm.util.HibernateUtil;
-import com.studentadm.dao.studentDaoInterface;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -18,9 +14,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import javax.annotation.Resource;
+
 import org.hibernate.Query;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
+import org.hibernate.SessionFactory;
+import org.springframework.stereotype.Repository;
+
+import com.studentadm.model.Student;
+import com.studentadm.model.StudentsGrade;
 
 
 /**
@@ -28,60 +30,31 @@ import org.hibernate.Transaction;
  * @author Thuy Ha
  */
 
-
+@Repository("studentDao")
 public class studentDao implements studentDaoInterface {
 
-	  private Session currentSession;
+		private SessionFactory sessionFactory;
 		
-	    private Transaction currentTransaction;
+		public SessionFactory getSessionFactory() {
+			return sessionFactory;
+		}
+		
+		@Resource(name="sessionFactory")
+	    public void setSessionFactory(SessionFactory sessionFactory) {
+		    this.sessionFactory = sessionFactory;
+		}
 	    
 	    public studentDao() {
 	    }
 	    
-	    public Session openCurrentSession() {
-	        currentSession = HibernateUtil.getSessionFactory().openSession();
-	        return currentSession;
-	    }
-
-	    public Session openCurrentSessionwithTransaction() {
-	        currentSession = HibernateUtil.getSessionFactory().openSession();
-	        currentTransaction = currentSession.beginTransaction();
-	        return currentSession;
-	    }
-
-	    public void closeCurrentSession() {
-	        currentSession.close();
-	    }
-
-	    public void closeCurrentSessionwithTransaction() {
-	        currentTransaction.commit();
-	        currentSession.close();
-	    }
-
-	    public Session getCurrentSession() {
-	        return currentSession;
-	    }
-
-	    public void setCurrentSession(Session currentSession) {
-	        this.currentSession = currentSession;
-	    }
-
-	    public Transaction getCurrentTransaction() {
-	        return currentTransaction;
-	    }
-
-	    public void setCurrentTransaction(Transaction currentTransaction) {
-	        this.currentTransaction = currentTransaction;
-	    }
-	    
-	    
-	  //Get new Student_id to create new Student row
+   
+	    //Get new Student_id to create new Student row
 	    @SuppressWarnings("unchecked")
 		@Override
 	    public int getNewStudentID() {    
 	        
 	        String hql = "SELECT max(student_id) FROM Student";
-	        Query query = getCurrentSession().createQuery(hql);
+	        Query query = sessionFactory.getCurrentSession().createQuery(hql);
 	        List<Integer> Id = query.list();
 	        
 	        int curID =1;
@@ -96,41 +69,40 @@ public class studentDao implements studentDaoInterface {
 	    // Insert new Student : entity
 	    @Override
 	    public void insert(Student entity) {      
-	        getCurrentSession().saveOrUpdate(entity);     
+	    	sessionFactory.getCurrentSession().saveOrUpdate(entity);     
 	    }
 
 	    // update student that has student_id  = id
 	    @Override
 	    public void update(Student entity) {       
-	        getCurrentSession().saveOrUpdate(entity);       
+	    	sessionFactory.getCurrentSession().saveOrUpdate(entity);       
 	    }
 
 	    //Select student that has student_id = id
 	    @Override
 	    public Student selectById(int id) {   
-	        Student st = (Student) getCurrentSession().get(Student.class, id);    
+	        Student st = (Student) sessionFactory.getCurrentSession().get(Student.class, id);    
 	        return st; 
 	    }
 
 	    // Delete student st
 	    @Override
 	    public void delete(Student st) {        	
-		getCurrentSession().delete(st);	
+	    	sessionFactory.getCurrentSession().delete(st);	
 	    }
 	    //Select all Student information in STudent table
 	    @SuppressWarnings("unchecked")
 		@Override
 	    public List<Student> select() {
-	        List<Student> students = (List<Student>) getCurrentSession().createQuery("from Student").list();
+	        List<Student> students = (List<Student>) sessionFactory.getCurrentSession().createQuery("from Student").list();
 	        return students;
 	    }
 	    
-
-	  
 	    
 	      //Method for student only
 	    //Get all Grade of students
-	    @Override
+	    @SuppressWarnings("unchecked")
+		@Override
 	     public List<StudentsGrade> getGrades() {
 	        List<StudentsGrade> stdGrad_list;
 	       
@@ -138,7 +110,7 @@ public class studentDao implements studentDaoInterface {
 	                + "crs.course_name, rls.mark1, rls.mark2 "
 	                + "from Student as st left join st.results as rls left join rls.pk.course as crs" ;
 	      
-	        Query query = getCurrentSession().createQuery(hql);  
+	        Query query = sessionFactory.getCurrentSession().createQuery(hql);  
 	        List<Object[]> studentGrades = query.list();
 
 	       
@@ -172,16 +144,17 @@ public class studentDao implements studentDaoInterface {
 	    }
 	     
 	     //Get Transcript of student that has student_id  = student_id
-	    @Override
-	      public List<StudentsGrade> getTranscript(int student_id)  {
-	          List<StudentsGrade> stdGrad_list;
+	    @SuppressWarnings("unchecked")
+		@Override
+	    public List<StudentsGrade> getTranscript(int student_id)  {
+	        List<StudentsGrade> stdGrad_list;
 	       
 	        String hql = "Select st.student_id,st.first_name,st.last_name, st.gender, "
 	                + "crs.course_name, rls.mark1, rls.mark2 "
 	                + "from Student as st left join st.results as rls left join rls.pk.course as crs"
 	                + " where st.student_id = " + student_id ;
 	      
-	        Query query = getCurrentSession().createQuery(hql);  
+	        Query query = sessionFactory.getCurrentSession().createQuery(hql);  
 	        List<Object[]> studentGrades = query.list();
 
 	       
@@ -214,8 +187,9 @@ public class studentDao implements studentDaoInterface {
 	    }
 	  
 	      //Write all data of Student Table to a text file named filename
-	      @Override
-	        public void write_to_file(String filename)  {
+	    @SuppressWarnings("unchecked")
+		@Override
+	    public void write_to_file(String filename)  {
 	                
 	            //Create a file
 	            File file = new File(filename);
@@ -244,7 +218,7 @@ public class studentDao implements studentDaoInterface {
 	            
 	                       
 	            String hql = "SELECT st FROM Student st";
-	            Query query = getCurrentSession().createQuery(hql);
+	            Query query = sessionFactory.getCurrentSession().createQuery(hql);
 	            List<Student> students = query.list();
 	            
 	            

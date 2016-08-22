@@ -18,72 +18,47 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.annotation.Resource;
+
 import org.hibernate.Query;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
+import org.hibernate.SessionFactory;
+import org.springframework.stereotype.Repository;
 
 import com.studentadm.model.Course;
 import com.studentadm.model.Results;
 import com.studentadm.model.Student;
 import com.studentadm.service.courseService;
 import com.studentadm.service.studentService;
-import com.studentadm.util.HibernateUtil;
 
 /**
  *
  * @author Administrator
+ * 
  */
+
+@Repository("resultDao")
 public class resultDao implements resultDaoInterface<Results> {
     
     
-       private Session currentSession;
+	private SessionFactory sessionFactory;
 	
-    private Transaction currentTransaction;
+	public SessionFactory getSessionFactory() {
+		return sessionFactory;
+	}
+	
+	@Resource(name="sessionFactory")
+    public void setSessionFactory(SessionFactory sessionFactory) {
+	    this.sessionFactory = sessionFactory;
+	}
     
     public resultDao() {
     }
-
-    public Session openCurrentSession() {
-        currentSession = HibernateUtil.getSessionFactory().openSession();
-        return currentSession;
-    }
-
-    public Session openCurrentSessionwithTransaction() {
-        currentSession = HibernateUtil.getSessionFactory().openSession();
-        currentTransaction = currentSession.beginTransaction();
-        return currentSession;
-    }
-
-    public void closeCurrentSession() {
-        currentSession.close();
-    }
-
-    public void closeCurrentSessionwithTransaction() {
-        currentTransaction.commit();
-        currentSession.close();
-    }
-
-    public Session getCurrentSession() {
-        return currentSession;
-    }
-
-    public void setCurrentSession(Session currentSession) {
-        this.currentSession = currentSession;
-    }
-
-    public Transaction getCurrentTransaction() {
-        return currentTransaction;
-    }
-
-    public void setCurrentTransaction(Transaction currentTransaction) {
-        this.currentTransaction = currentTransaction;
-    }
-    
+       
     //insert a new record
     @Override
     public void insert(Results entity) {
              
-        getCurrentSession().saveOrUpdate(entity);  
+    	sessionFactory.getCurrentSession().saveOrUpdate(entity);  
               
     }
 
@@ -91,7 +66,7 @@ public class resultDao implements resultDaoInterface<Results> {
     @Override
     public void update(Results entity) {
         
-        getCurrentSession().saveOrUpdate(entity);
+    	sessionFactory.getCurrentSession().saveOrUpdate(entity);
         
     }
 
@@ -102,7 +77,7 @@ public class resultDao implements resultDaoInterface<Results> {
  
         String hql = "FROM Results "
                 + "where pk.student.student_id = " + st_id + " and pk.course.course_id = " + crs_id ;
-        Query query = getCurrentSession().createQuery(hql);
+        Query query = sessionFactory.getCurrentSession().createQuery(hql);
         List<Results> results = query.list();
         
         Results result = null;
@@ -120,18 +95,20 @@ public class resultDao implements resultDaoInterface<Results> {
         
         String hql = "FROM Results "
                 + "where pk.student.student_id = " + st_id  ;
-        Query query = getCurrentSession().createQuery(hql);
+        Query query = sessionFactory.getCurrentSession().createQuery(hql);
         List<Results> results = query.list();
                 
         return results;         
     }
     
     // Select all results that have course_id  = crs_id
-    public List<Results> selectCourse(int crs_id){
+    
+    @SuppressWarnings("unchecked")
+	public List<Results> selectCourse(int crs_id){
         
         String hql = "FROM Results "
                 + "where pk.course.course_id = " + crs_id  ;
-        Query query = getCurrentSession().createQuery(hql);
+        Query query = sessionFactory.getCurrentSession().createQuery(hql);
         List<Results> results = query.list();
                 
         return results;         
@@ -140,23 +117,25 @@ public class resultDao implements resultDaoInterface<Results> {
     //Delete a record result
     @Override
     public void delete(Results result) {        	
-	getCurrentSession().delete(result);	
+    	sessionFactory.getCurrentSession().delete(result);	
     }
 
     
     //Select all records of Results
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     public List<Results> select() {
         
                 
-        List<Results> results = (List<Results>) getCurrentSession().createQuery("from Results").list();
+        List<Results> results = (List<Results>) sessionFactory.getCurrentSession().createQuery("from Results").list();
 	
         return results;
     }
     
 
     // Write results table to a text file
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     public void write_to_file(String filename) {
         
         //Create a file       
@@ -176,7 +155,7 @@ public class resultDao implements resultDaoInterface<Results> {
         
         //Get information from Database
         String hql = "SELECT rlst FROM Results rlst";
-        Query query = getCurrentSession().createQuery(hql);
+        Query query = sessionFactory.getCurrentSession().createQuery(hql);
         List<Results> results = query.list();
         
         //write to file   
@@ -235,7 +214,6 @@ public class resultDao implements resultDaoInterface<Results> {
                 int mark2 = Integer.parseInt(components[3]);
                 System.out.println("Student " + student_id + " " + course_id + " "+ mark1 + " " +  mark2 );
                 
-                resultDao rlsDao = new resultDao();
                 studentService stService = new studentService();
                 courseService crsService = new courseService();
 
@@ -280,9 +258,5 @@ public class resultDao implements resultDaoInterface<Results> {
         }
     }
 
-
-  
-
-    
     
 }

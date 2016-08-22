@@ -18,69 +18,42 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.annotation.Resource;
+
 import org.hibernate.Query;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
+import org.hibernate.SessionFactory;
+import org.springframework.stereotype.Repository;
 
 import com.studentadm.model.Course;
-import com.studentadm.util.HibernateUtil;
 
 /**
  *
  * @author Administrator
+ * 
  */
+
+
+@Repository("courseDao")
 public class courseDao implements courseDaoInterface{
     
-       private Session currentSession;
+	private SessionFactory sessionFactory;
 	
-    private Transaction currentTransaction;
-    
-    public courseDao() {
-    }
-
-    public Session openCurrentSession() {
-        currentSession = HibernateUtil.getSessionFactory().openSession();
-        return currentSession;
-    }
-
-    public Session openCurrentSessionwithTransaction() {
-        currentSession = HibernateUtil.getSessionFactory().openSession();
-        currentTransaction = currentSession.beginTransaction();
-        return currentSession;
-    }
-
-    public void closeCurrentSession() {
-        currentSession.close();
-    }
-
-    public void closeCurrentSessionwithTransaction() {
-        currentTransaction.commit();
-        currentSession.close();
-    }
-
-    public Session getCurrentSession() {
-        return currentSession;
-    }
-
-    public void setCurrentSession(Session currentSession) {
-        this.currentSession = currentSession;
-    }
-
-    public Transaction getCurrentTransaction() {
-        return currentTransaction;
-    }
-
-    public void setCurrentTransaction(Transaction currentTransaction) {
-        this.currentTransaction = currentTransaction;
-    }
+	public SessionFactory getSessionFactory() {
+		return sessionFactory;
+	}
+	
+	 @Resource(name="sessionFactory")
+	    public void setSessionFactory(SessionFactory sessionFactory) {
+		    this.sessionFactory = sessionFactory;
+		}
     
     //Get new course ID to create a new Course row
     @SuppressWarnings("unchecked")
-	@Override
+	@Override	
     public int getNewCourseID() {    
         
         String hql = "SELECT max(course_id) FROM Course";
-        Query query = getCurrentSession().createQuery(hql);
+        Query query = sessionFactory.getCurrentSession().createQuery(hql);
         List<Integer> Id = query.list();
         
         int curID =1;
@@ -88,61 +61,28 @@ public class courseDao implements courseDaoInterface{
         if (!(Id.get(0)==null)){
             curID = Id.get(0) +1 ;      
         }
-
         
-        return curID;
-              
+        return curID;     
     }
-    
-//     public ArrayList<Integer> getAllCourseID() throws SQLException, ClassNotFoundException{
-//        
-//        ArrayList<Integer> allCourseID = new ArrayList<>();
-//        
-//        int curID = 1;
-//        try (Statement statement = JDBC_StudentConnect.getConnection().createStatement()) {
-//            String query  = "Select course_id from course";
-//            
-//            try (ResultSet rslSet = statement.executeQuery(query)) {
-//                while (rslSet.next()){
-//                    
-//                    curID = rslSet.getInt("course_id");
-//                    
-//                    allCourseID.add(curID);;
-//                    
-//                }
-//                rslSet.close();
-//            }
-//            
-//        }
-//        
-//        JDBC_StudentConnect.closeConnection();
-//        
-//        
-//        return allCourseID;
-//              
-//    }
+   
      
     //insert a new record
     @Override
-    public void insert(Course entity) {
-       
-        getCurrentSession().saveOrUpdate(entity);
-       
+    public void insert(Course entity) {     
+    	sessionFactory.getCurrentSession().saveOrUpdate(entity);
     }
 
     // update a record
     @Override
-    public void update(Course entity) {
-        
-        getCurrentSession().saveOrUpdate(entity);
-        
+    public void update(Course entity) {     
+    	sessionFactory.getCurrentSession().saveOrUpdate(entity);
     }
 
     // Select a course that has course_id  = id
     @Override
     public Course selectById(int id) {
        
-        Course st = (Course) getCurrentSession().get(Course.class, id);
+        Course st = (Course) sessionFactory.getCurrentSession().get(Course.class, id);
        
         return st; 
     }
@@ -150,21 +90,23 @@ public class courseDao implements courseDaoInterface{
     //Delete a course
     @Override
     public void delete(Course course) {        	
-	getCurrentSession().delete(course);	
+    	sessionFactory.getCurrentSession().delete(course);	
     }
 
     //Select all course in Course table
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     public List<Course> select() {
         
-        List<Course> students = (List<Course>) getCurrentSession().createQuery("from Course").list();
+        List<Course> students = (List<Course>) sessionFactory.getCurrentSession().createQuery("from Course").list();
 	
         return students;
     }
     
     
     //Write all data of Course Table to a text file named filename
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     public void write_to_file(String filename) {
        
 
@@ -184,7 +126,7 @@ public class courseDao implements courseDaoInterface{
 
          //Get information from Database
         String hql = "SELECT crs FROM Course crs";
-        Query query = getCurrentSession().createQuery(hql);
+        Query query = sessionFactory.getCurrentSession().createQuery(hql);
         List<Course> courses = query.list();
 
         //write to file
@@ -264,7 +206,9 @@ public class courseDao implements courseDaoInterface{
         }
     }
 
+    
    
+    
 }    
 
   
