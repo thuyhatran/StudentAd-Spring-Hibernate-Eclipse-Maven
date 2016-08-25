@@ -22,6 +22,7 @@ import javax.annotation.Resource;
 
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.studentadm.model.Course;
@@ -33,9 +34,10 @@ import com.studentadm.model.Course;
  */
 
 
-@Repository
+@Repository("courseDao")
 public class courseDao implements courseDaoInterface{
     
+	@Autowired
 	private SessionFactory sessionFactory;
 	
 	public SessionFactory getSessionFactory() {
@@ -107,7 +109,6 @@ public class courseDao implements courseDaoInterface{
     @SuppressWarnings("unchecked")
 	@Override
     public void write_to_file(String filename) {
-       
 
         //Create a file
         File file = new File(filename);
@@ -142,6 +143,7 @@ public class courseDao implements courseDaoInterface{
 
             fout.println(course_id +","+course_name);
         }
+        
         fout.close();
 
     }
