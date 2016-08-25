@@ -30,7 +30,7 @@ import com.studentadm.model.StudentsGrade;
  * @author Thuy Ha
  */
 
-@Repository("studentDao")
+@Repository("stDao")
 public class studentDao implements studentDaoInterface {
 
 		private SessionFactory sessionFactory;
@@ -39,7 +39,7 @@ public class studentDao implements studentDaoInterface {
 			return sessionFactory;
 		}
 		
-		@Resource(name="sessionFactory")
+		
 	    public void setSessionFactory(SessionFactory sessionFactory) {
 		    this.sessionFactory = sessionFactory;
 		}

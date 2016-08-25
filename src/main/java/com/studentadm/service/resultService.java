@@ -18,21 +18,37 @@ import com.studentadm.model.Results;
  * @author thuyha
  */
 
-@Service("resultService")
+@Service
 public class resultService implements resultServiceInterface{
     
-    private static resultDao stDao;
+    private static resultDao rslDao;
     
     public resultService() {
-        stDao = new resultDao();
+        rslDao = new resultDao();
     }
         
+    
+    
 
-    @Override
+    public static resultDao getRslDao() {
+		return rslDao;
+	}
+
+
+
+
+	public static void setRslDao(resultDao rslDao) {
+		resultService.rslDao = rslDao;
+	}
+
+
+
+
+	@Override
     @Transactional
     public void insert(Results entity) {
         
-        stDao.insert(entity);
+        rslDao.insert(entity);
         
     }
 
@@ -40,7 +56,7 @@ public class resultService implements resultServiceInterface{
     @Transactional
     public void update(Results entity) {
         
-        stDao.update(entity);
+        rslDao.update(entity);
        
     }
 
@@ -48,7 +64,7 @@ public class resultService implements resultServiceInterface{
     @Transactional
     public Results selectById(int st_id, int crs_id) {
        
-        Results st = stDao.selectById(st_id, crs_id);
+        Results st = rslDao.selectById(st_id, crs_id);
        
         return st; 
     }
@@ -57,8 +73,8 @@ public class resultService implements resultServiceInterface{
     @Transactional
     public void delete(int st_id, int crs_id) {
 	         
-		Results st = stDao.selectById(st_id, crs_id);
-		stDao.delete(st);
+		Results st = rslDao.selectById(st_id, crs_id);
+		rslDao.delete(st);
 
     }
 
@@ -66,7 +82,7 @@ public class resultService implements resultServiceInterface{
     @Transactional
     public List<Results> select() {
         
-        List<Results> results = stDao.select();
+        List<Results> results = rslDao.select();
         
         return results;
     }
@@ -75,10 +91,10 @@ public class resultService implements resultServiceInterface{
     @Transactional
     public void deleteStudent(int st_id) {
         
-        List<Results> results = stDao.selectStudent(st_id);
+        List<Results> results = rslDao.selectStudent(st_id);
         for (Results result: results ){
             System.out.println(result);
-            stDao.delete(result);
+            rslDao.delete(result);
         }
 	      
         System.out.println("Delle all recourd of  student id=" + st_id);
@@ -88,10 +104,10 @@ public class resultService implements resultServiceInterface{
     @Transactional
     public void deleteCourse(int course_id) {
            
-        List<Results> results = stDao.selectCourse(course_id);
+        List<Results> results = rslDao.selectCourse(course_id);
         for (Results result: results ){
             System.out.println(result);
-            stDao.delete(result);
+            rslDao.delete(result);
         }
         
     }
@@ -100,7 +116,7 @@ public class resultService implements resultServiceInterface{
     @Transactional
     public void write_to_file(String filename)  {
 
-        stDao.write_to_file(filename); 
+        rslDao.write_to_file(filename); 
        
     }
 
@@ -108,7 +124,7 @@ public class resultService implements resultServiceInterface{
     @Transactional
     public void insert_from_file(String filename) {
 
-        stDao.insert_from_file(filename);
+        rslDao.insert_from_file(filename);
      
     } 
     

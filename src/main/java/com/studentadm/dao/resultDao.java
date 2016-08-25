@@ -36,7 +36,7 @@ import com.studentadm.service.studentService;
  * 
  */
 
-@Repository("resultDao")
+@Repository
 public class resultDao implements resultDaoInterface<Results> {
     
     
@@ -46,7 +46,7 @@ public class resultDao implements resultDaoInterface<Results> {
 		return sessionFactory;
 	}
 	
-	@Resource(name="sessionFactory")
+	
     public void setSessionFactory(SessionFactory sessionFactory) {
 	    this.sessionFactory = sessionFactory;
 	}

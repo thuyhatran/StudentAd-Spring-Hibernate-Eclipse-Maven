@@ -19,7 +19,7 @@ import com.studentadm.model.StudentsGrade;
  *
  * @author Administrator
  */
-@Service("studentService")
+@Service
 public class studentService implements studentServiceInterface{
     
     private static studentDao stDao;
@@ -29,7 +29,20 @@ public class studentService implements studentServiceInterface{
     }
     
     
-    @Override
+    
+    public static studentDao getStDao() {
+		return stDao;
+	}
+
+
+
+	public static void setStDao(studentDao stDao) {
+		studentService.stDao = stDao;
+	}
+
+
+
+	@Override
     @Transactional
     public void insert(Student entity) {
 

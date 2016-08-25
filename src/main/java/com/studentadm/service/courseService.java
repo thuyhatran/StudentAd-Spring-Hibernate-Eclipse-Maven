@@ -19,7 +19,7 @@ import com.studentadm.model.Course;
  * @author Administrator
  */
 
-@Service("courseService")
+@Service
 public class courseService implements courseServiceInterface{
     
     private static courseDao crsDao;
@@ -28,9 +28,12 @@ public class courseService implements courseServiceInterface{
 	        crsDao = new courseDao();
 	    }
     
-  
-    
-    @Override
+    public static courseDao getCrsDao() {
+	return crsDao;
+}
+
+
+	@Override
     @Transactional
     public void insert(Course entity) {
         crsDao.insert(entity);

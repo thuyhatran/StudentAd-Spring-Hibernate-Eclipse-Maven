@@ -33,7 +33,7 @@ import com.studentadm.model.Course;
  */
 
 
-@Repository("courseDao")
+@Repository
 public class courseDao implements courseDaoInterface{
     
 	private SessionFactory sessionFactory;
@@ -42,10 +42,9 @@ public class courseDao implements courseDaoInterface{
 		return sessionFactory;
 	}
 	
-	 @Resource(name="sessionFactory")
-	    public void setSessionFactory(SessionFactory sessionFactory) {
-		    this.sessionFactory = sessionFactory;
-		}
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		this.sessionFactory = sessionFactory;
+	}
     
     //Get new course ID to create a new Course row
     @SuppressWarnings("unchecked")
