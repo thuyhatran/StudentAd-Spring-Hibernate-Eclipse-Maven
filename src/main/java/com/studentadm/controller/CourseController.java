@@ -6,154 +6,185 @@
 package com.studentadm.controller;
 
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+import com.studentadm.model.Course;
+import com.studentadm.service.CourseService;
+import com.studentadm.service.ResultService;
+
+import org.apache.log4j.Logger;
 
 /**
  *
  * @author Thuy Ha
  */
 
-
+@Controller
+@RequestMapping("/course")
 public class CourseController{
 	
-
+	//initializing the logger
+    static Logger log = Logger.getLogger(CourseController.class.getName());
 	
+	@Autowired
+    CourseService courseService;
 	
-/*
-    *//**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     *//*
+	@Autowired
+    ResultService resultService;
+	
+    /*
+    * Display all courses.
+    * path is "/course" or "/course/list_course"  after application path
+    */
+   @RequestMapping(value = { "/", "/listall" }, method = RequestMethod.GET)
+   public String listCourse(ModelMap model) {
+   	
+       List<Course> courses = courseService.select();
+       
+       for (Course course:courses)
+       		log.debug(course);
+       
+       model.addAttribute("courses", courses);
+       
+       return "course_list";
+   }	
+ 
+   @RequestMapping(value = { "/new" }, method = RequestMethod.GET)
+   public String newCourse(ModelMap model) {
+	   
+	   int course_id = courseService.getNewCourseID();
+       Course course = new Course(course_id);
+       
+       log.debug("Creating ... new course");
+       
+       model.addAttribute("course", course);
+      // model.addAttribute("edit", false);
+       
+       model.addAttribute("course_id", course_id);
+       model.addAttribute("stid_readonly","readonly");  //set course_id field to readonly
+       model.addAttribute("new_disabled", "disabled");
+       model.addAttribute("insert_disabled", "");
+       model.addAttribute("update_disabled", "disabled");
+       model.addAttribute("search_disabled", "disabled");
+       model.addAttribute("delete_disabled", "disabled");
+       
+       return "course_form";
+   }
    
-
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    *//**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     *//*
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        //processRequest(request, response);
-        
-         String action = request.getParameter("action");
-
-        String url;
-        switch (action){
-            case "CourseForm":  //Call from menu
-                CourseControllerMethods.courseFormCalled(request, response);
-                url ="/WEB-INF/views/JSPs/course_form.jsp";
-                getServletContext().getRequestDispatcher(url).forward(request, response);
-                break;
-            case "ListAll":  //Call from menu
-               CourseControllerMethods.listAllCalled(request, response);
-               url ="/WEB-INF/views/JSPs/course_list.jsp";
-               getServletContext().getRequestDispatcher(url).forward(request, response);
-                break;
-                
-            case "Delete":  //Call from student_list
-                CourseControllerMethods.deleteCalled(request, response);
-                url ="/WEB-INF/views/JSPs/course_list.jsp";
-                getServletContext().getRequestDispatcher(url).forward(request, response);
-                break;
-            case "Edit":  //Call from student_list
-                CourseControllerMethods.editCalled(request, response);
-                url ="/WEB-INF/views/JSPs/course_form.jsp";
-                getServletContext().getRequestDispatcher(url).forward(request, response);
-                break;
-                
-                
-            default:
-                url ="/WEB-INF/views/JSPs/main.jsp";
-                getServletContext().getRequestDispatcher(url).forward(request, response);
-                
-                    
-        }
+   // Insert/save new course
+   @RequestMapping(value={"/new"}, method = RequestMethod.POST)
+   public String insertCourse(Course course, ModelMap model){
+	   
+	   courseService.insert(course);
+	   
+	   log.debug(" new course inserted" + course);
+	   
+	   return "redirect:/listall";  //after inserting, display all courses
+   }
+   
+   //Update a course
+   @RequestMapping(value = {"/edit{course_id"}, method = RequestMethod.GET)
+   public String editCourse(@PathVariable int course_id, ModelMap model){
+	   
+	   Course course = courseService.selectById(course_id);
+	   model.addAttribute("course",course);
+	   
+	   model.addAttribute("id_readonly","readonly");  //set course_id field to readonly          
+       
+       model.addAttribute("new_disabled", "disabled");
+       model.addAttribute("insert_disabled", "disabled");
+       model.addAttribute("update_disabled", "");
+       model.addAttribute("search_disabled", "disabled");
+       model.addAttribute("delete_disabled", "");
+	   
+	   return "course_form";
+	   
+   }
+   
+   //Update a course
+   @RequestMapping(value = {"/edit{course_id"}, method = RequestMethod.POST)
+   public String updateCourse(Course course){
+	   
+	   courseService.update(course);
+	   
+	   log.debug(" course updated" + course);
+	   
+	   return "redirect:/listall";
+	   
+   }
+   
+   
+   //Delete a course  
+   @RequestMapping(value = {"/delete{course_id}"}, method = RequestMethod.GET)
+   public String deleteCourse(@PathVariable int course_id){
+	   
+	   //delete all result of this course   
+       resultService.deleteCourse(course_id);
+       
+       //delete this course    
+       courseService.delete(course_id);
+       
+       log.debug(" Delete course " + course_id + " and all related results");
+ 
+       return "redirect:/listall";
+	   
+   }
+   
+   //Display a course  
+   @RequestMapping(value = {"/find{course_id}"}, method = RequestMethod.GET)
+   public String displayCourse(@PathVariable int course_id, ModelMap model){
+	   
+	   Course course = courseService.selectById(course_id);
+	   
+	   log.debug(course);
+	   
+       if (course ==null){
            
+           //JFrame parent = new JFrame();
+           //JOptionPane.showMessageDialog(null, "Not found!");
         
-        
-        
-    }
-
-    *//**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     *//*
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        //processRequest(request, response);
-        
-            String submit = request.getParameter("submit");
-            
-            System.out.print("------- submit : "+submit+"------------");
-            String url ;
-            
-            switch (submit){
-                               
-                case "New":                    
-                    CourseControllerMethods.newCourseCalled(request, response);
-                    url ="/WEB-INF/views/JSPs/course_form.jsp";
-                    getServletContext().getRequestDispatcher(url).forward(request, response);
-                    break;
-                    
-                case "Insert":                    
-                    CourseControllerMethods.insertClicked(request, response);
-                    url ="/WEB-INF/views/JSPs/course_list.jsp";
-                    getServletContext().getRequestDispatcher(url).forward(request, response);
-                    break;
-
-                case "Delete":
-                    CourseControllerMethods.deleteClicked(request, response);
-                    url ="/WEB-INF/views/JSPs/course_list.jsp";
-                    getServletContext().getRequestDispatcher(url).forward(request, response);
-                    break;
-
-                case "Update":
-                    CourseControllerMethods.updateClicked(request, response);
-                    url ="/WEB-INF/views/JSPs/course_list.jsp";
-                    getServletContext().getRequestDispatcher(url).forward(request, response);
-                    break;
-
-                case "Search":
-                    CourseControllerMethods.searchClicked(request, response);
-                    url ="/WEB-INF/views/JSPs/course_form.jsp";
-                    getServletContext().getRequestDispatcher(url).forward(request, response);
-                    break;
-
-                default:
-                    url ="/WEB-INF/views/JSPs/main.jsp";
-                    getServletContext().getRequestDispatcher(url).forward(request, response);    
-
-                    
-            }
+            model.addAttribute("insert_disabled", "disabled");
+            model.addAttribute("update_disabled","disabled");
+            model.addAttribute("delete_disabled","disabled");
            
-        
-        
-        
-        
-    }
+       }else{
+                   
+            model.addAttribute("course_id", course_id);
+            model.addAttribute("course", course);
+            model.addAttribute("insert_disabled", "disabled");
+            model.addAttribute("stid_readonly","");
+       }
 
-    *//**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     *//*
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
-*/
+
+       return "course_form"; 
+   }
+   
+   
+   /*
+   //This way below is working similar to String listCourse() above (return a string), this is the way of older String version
+   @RequestMapping(value="/list_course", method=RequestMethod.GET)
+	public ModelAndView listCourse(){
+   	
+		ModelAndView model = new ModelAndView("course_list");
+		
+		 List<Course> courses = courseService.select();
+	        
+	        for (Course course1:courses)
+	        	System.out.println(course1);
+	        
+	       model.addObject(courses);
+
+		return model;
+	}
+	*/
+
+    
+ 
 }

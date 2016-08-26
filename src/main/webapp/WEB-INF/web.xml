@@ -8,6 +8,19 @@
         </session-timeout>
     </session-config>
     
+    
+    <display-name>StudentApp</display-name>
+    <servlet>
+        <servlet-name>appContext</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <!--<load-on-startup>2</load-on-startup>-->
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>appContext</servlet-name>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
+  
+    
     <welcome-file-list>
         <welcome-file>/WEB-INF/views/JSPs/main.jsp</welcome-file>
     </welcome-file-list>
