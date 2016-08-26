@@ -30,7 +30,7 @@
 
 	
 	<context:annotation-config/>
-	<context:component-scan base-package="com.studentadm"/>
+	<context:component-scan base-package="com.studentadm.controller"/>
 	
 
 	<aop:config proxy-target-class="true"/>
@@ -89,7 +89,7 @@
         
     <bean id="viewResolver"
           class="org.springframework.web.servlet.view.InternalResourceViewResolver"
-          p:prefix="/WEB-INF/view/JSPs/"
+          p:prefix="/WEB-INF/views/JSPs/"
           p:suffix=".jsp" />
           
 	
