@@ -10,7 +10,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.studentadm.dao.resultDao;
+import com.studentadm.dao.ResultDao;
 import com.studentadm.model.Results;
 
 /**
@@ -20,26 +20,26 @@ import com.studentadm.model.Results;
 
 @Service
 @Transactional
-public class resultService implements resultServiceInterface{
+public class ResultService implements ResultServiceInterface{
     
-    private static resultDao rslDao;
+    private static ResultDao rslDao;
     
-    public resultService() {
-        rslDao = new resultDao();
+    public ResultService() {
+        rslDao = new ResultDao();
     }
         
     
     
 
-    public static resultDao getRslDao() {
+    public static ResultDao getRslDao() {
 		return rslDao;
 	}
 
 
 
 
-	public static void setRslDao(resultDao rslDao) {
-		resultService.rslDao = rslDao;
+	public static void setRslDao(ResultDao rslDao) {
+		ResultService.rslDao = rslDao;
 	}
 
 

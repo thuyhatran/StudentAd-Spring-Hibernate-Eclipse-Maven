@@ -18,8 +18,6 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.annotation.Resource;
-
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;
@@ -27,8 +25,8 @@ import org.springframework.stereotype.Repository;
 import com.studentadm.model.Course;
 import com.studentadm.model.Results;
 import com.studentadm.model.Student;
-import com.studentadm.service.courseService;
-import com.studentadm.service.studentService;
+import com.studentadm.service.CourseService;
+import com.studentadm.service.StudentService;
 
 /**
  *
@@ -37,7 +35,7 @@ import com.studentadm.service.studentService;
  */
 
 @Repository
-public class resultDao implements resultDaoInterface<Results> {
+public class ResultDao implements ResultDaoInterface<Results> {
     
     
 	private SessionFactory sessionFactory;
@@ -51,7 +49,7 @@ public class resultDao implements resultDaoInterface<Results> {
 	    this.sessionFactory = sessionFactory;
 	}
     
-    public resultDao() {
+    public ResultDao() {
     }
        
     //insert a new record
@@ -148,7 +146,7 @@ public class resultDao implements resultDaoInterface<Results> {
             try {
                 file.createNewFile();
             } catch (IOException ex) {
-                Logger.getLogger(resultDao.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(ResultDao.class.getName()).log(Level.SEVERE, null, ex);
             }         
         }
         
@@ -164,7 +162,7 @@ public class resultDao implements resultDaoInterface<Results> {
         try {
             fout = new PrintWriter( new BufferedWriter (new FileWriter(file)));
         } catch (IOException ex) {
-            Logger.getLogger(resultDao.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ResultDao.class.getName()).log(Level.SEVERE, null, ex);
         }
                 
         for(Results rlst:results){
@@ -192,14 +190,14 @@ public class resultDao implements resultDaoInterface<Results> {
             try {
                 fin = new BufferedReader( new FileReader(file));
             } catch (FileNotFoundException ex) {
-                Logger.getLogger(resultDao.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(ResultDao.class.getName()).log(Level.SEVERE, null, ex);
             }
             
             String line = null;
             try {
                 line = fin.readLine();
             } catch (IOException ex) {
-                Logger.getLogger(resultDao.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(ResultDao.class.getName()).log(Level.SEVERE, null, ex);
             }
             
              
@@ -214,8 +212,8 @@ public class resultDao implements resultDaoInterface<Results> {
                 int mark2 = Integer.parseInt(components[3]);
                 System.out.println("Student " + student_id + " " + course_id + " "+ mark1 + " " +  mark2 );
                 
-                studentService stService = new studentService();
-                courseService crsService = new courseService();
+                StudentService stService = new StudentService();
+                CourseService crsService = new CourseService();
 
                 Student st = stService.selectById(student_id);
                 Course crs = crsService.selectById(course_id);
@@ -242,7 +240,7 @@ public class resultDao implements resultDaoInterface<Results> {
                 try {
                     line = fin.readLine();
                 } catch (IOException ex) {
-                    Logger.getLogger(resultDao.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(ResultDao.class.getName()).log(Level.SEVERE, null, ex);
                 }            
             }
             
@@ -250,7 +248,7 @@ public class resultDao implements resultDaoInterface<Results> {
             try {                
                 fin.close();
             } catch (IOException ex) {
-                Logger.getLogger(resultDao.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(ResultDao.class.getName()).log(Level.SEVERE, null, ex);
             }
             
             System.out.println("end of inserting");

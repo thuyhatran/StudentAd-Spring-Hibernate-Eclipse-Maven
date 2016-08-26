@@ -31,7 +31,7 @@ import com.studentadm.model.StudentsGrade;
  */
 
 @Repository("stDao")
-public class studentDao implements studentDaoInterface {
+public class StudentDao implements StudentDaoInterface {
 
 		private SessionFactory sessionFactory;
 		
@@ -44,7 +44,7 @@ public class studentDao implements studentDaoInterface {
 		    this.sessionFactory = sessionFactory;
 		}
 	    
-	    public studentDao() {
+	    public StudentDao() {
 	    }
 	    
    
@@ -201,7 +201,7 @@ public class studentDao implements studentDaoInterface {
 	                try {
 	                    file.createNewFile();
 	                } catch (IOException ex) {
-	                    Logger.getLogger(studentDao.class.getName()).log(Level.SEVERE, null, ex);
+	                    Logger.getLogger(StudentDao.class.getName()).log(Level.SEVERE, null, ex);
 	                }
 	            }
 	            
@@ -211,7 +211,7 @@ public class studentDao implements studentDaoInterface {
 	            try {
 	                fout = new PrintWriter( new BufferedWriter (new FileWriter(file)));
 	            } catch (IOException ex) {
-	                Logger.getLogger(studentDao.class.getName()).log(Level.SEVERE, null, ex);
+	                Logger.getLogger(StudentDao.class.getName()).log(Level.SEVERE, null, ex);
 	            }
 	            
 	              //Get information from Database
@@ -253,14 +253,14 @@ public class studentDao implements studentDaoInterface {
 	            try {
 	                fin = new BufferedReader( new FileReader(file));
 	            } catch (FileNotFoundException ex) {
-	                Logger.getLogger(studentDao.class.getName()).log(Level.SEVERE, null, ex);
+	                Logger.getLogger(StudentDao.class.getName()).log(Level.SEVERE, null, ex);
 	            }
 	            
 	            String line = null;
 	            try {
 	                line = fin.readLine();
 	            } catch (IOException ex) {
-	                Logger.getLogger(studentDao.class.getName()).log(Level.SEVERE, null, ex);
+	                Logger.getLogger(StudentDao.class.getName()).log(Level.SEVERE, null, ex);
 	            }
 	            
 	             
@@ -286,7 +286,7 @@ public class studentDao implements studentDaoInterface {
 	                try {
 	                    line = fin.readLine();
 	                } catch (IOException ex) {
-	                    Logger.getLogger(studentDao.class.getName()).log(Level.SEVERE, null, ex);
+	                    Logger.getLogger(StudentDao.class.getName()).log(Level.SEVERE, null, ex);
 	                }            
 	            }
 	            
@@ -294,7 +294,7 @@ public class studentDao implements studentDaoInterface {
 	            try {                
 	                fin.close();
 	            } catch (IOException ex) {
-	                Logger.getLogger(studentDao.class.getName()).log(Level.SEVERE, null, ex);
+	                Logger.getLogger(StudentDao.class.getName()).log(Level.SEVERE, null, ex);
 	            }
 	            
 	            System.out.println("end of inserting");

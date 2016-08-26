@@ -11,7 +11,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.studentadm.dao.studentDao;
+import com.studentadm.dao.StudentDao;
 import com.studentadm.model.Student;
 import com.studentadm.model.StudentsGrade;
 
@@ -20,24 +20,24 @@ import com.studentadm.model.StudentsGrade;
  * @author Administrator
  */
 @Service
-public class studentService implements studentServiceInterface{
+public class StudentService implements StudentServiceInterface{
     
-    private static studentDao stDao;
+    private static StudentDao stDao;
 
-    public studentService() {
-        stDao = new studentDao();
+    public StudentService() {
+        stDao = new StudentDao();
     }
     
     
     
-    public static studentDao getStDao() {
+    public static StudentDao getStDao() {
 		return stDao;
 	}
 
 
 
-	public static void setStDao(studentDao stDao) {
-		studentService.stDao = stDao;
+	public static void setStDao(StudentDao stDao) {
+		StudentService.stDao = stDao;
 	}
 
 

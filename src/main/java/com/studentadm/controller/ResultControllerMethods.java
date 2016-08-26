@@ -5,10 +5,10 @@
  */
 package com.studentadm.controller;
 
-import com.studentadm.service.courseService;
-import com.studentadm.service.resultService;
-import com.studentadm.service.resultViewService;
-import com.studentadm.service.studentService;
+import com.studentadm.service.CourseService;
+import com.studentadm.service.ResultService;
+import com.studentadm.service.ResultViewService;
+import com.studentadm.service.StudentService;
 import com.studentadm.model.Course;
 import com.studentadm.model.Results;
 import com.studentadm.model.Results_view;
@@ -71,11 +71,11 @@ public class ResultControllerMethods {
     static public void listAllCalled(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-//        resultService rlsService = new resultService();
+//        ResultService rlsService = new ResultService();
 //        List<Results> results = new ArrayList<>();     
 //        results =  rlsService.select();
         
-        resultViewService rlsViewService = new resultViewService();
+        ResultViewService rlsViewService = new ResultViewService();
         List<Results_view> results_view = rlsViewService.select();
             
         request.setAttribute("results", results_view);
@@ -89,11 +89,11 @@ public class ResultControllerMethods {
         int student_id = Integer.parseInt(request.getParameter("student_id"));
         int course_id = Integer.parseInt(request.getParameter("course_id"));
         
-        resultService crsService = new resultService();
+        ResultService crsService = new ResultService();
         crsService.delete(student_id,course_id);
                       
         //Prepared for refresh page with result's list
-        resultViewService rlsViewService = new resultViewService();
+        ResultViewService rlsViewService = new ResultViewService();
         List<Results_view> results_view = rlsViewService.select();
 
         request.setAttribute("results", results_view);
@@ -113,7 +113,7 @@ public class ResultControllerMethods {
             //get course's info
             int student_id = Integer.parseInt(request.getParameter("student_id"));
             int course_id = Integer.parseInt(request.getParameter("course_id"));
-            resultViewService rslService = new resultViewService();            
+            ResultViewService rslService = new ResultViewService();            
             //Results result = rslService.selectById(student_id,course_id); 
             
             Results_view result_view = rslService.selectById(student_id,course_id);
@@ -143,9 +143,9 @@ public class ResultControllerMethods {
             
         //    Results rsl = new Results(student_id,course_id,mark1,mark2);
             
-            resultService rlsService = new resultService();
-            studentService stService = new studentService();
-            courseService crsService = new courseService();
+            ResultService rlsService = new ResultService();
+            StudentService stService = new StudentService();
+            CourseService crsService = new CourseService();
             
             Student st = stService.selectById(student_id);
             Course crs = crsService.selectById(course_id);
@@ -164,7 +164,7 @@ public class ResultControllerMethods {
             }
 
             //prepared to forward to course_list
-            resultViewService rlsViewService = new resultViewService();
+            ResultViewService rlsViewService = new ResultViewService();
             List<Results_view> results_view = rlsViewService.select();
 
             request.setAttribute("results", results_view);
@@ -180,11 +180,11 @@ public class ResultControllerMethods {
 //            int course_id = Integer.parseInt(request.getParameter("course_id"));
 //            
 //             //delete all result of this course
-//            resultService rlsService = new resultService();
+//            ResultService rlsService = new ResultService();
 //            rlsService.delete(student_id,course_id);
 //
 //            //prepared to forward to course_list
-//            resultViewService rlsViewService = new resultViewService();
+//            ResultViewService rlsViewService = new ResultViewService();
 //            List<Results_view> results_view = rlsViewService.select();
 //
 //            request.setAttribute("results", results_view);
@@ -225,7 +225,7 @@ public class ResultControllerMethods {
                 System.out.println("not null");
                 int student_id = Integer.parseInt(st_student_id);
                 int course_id = Integer.parseInt(st_course_id);
-                resultViewService rlsService = new resultViewService();
+                ResultViewService rlsService = new ResultViewService();
             
                     result= rlsService.selectById(student_id,course_id);
 
@@ -262,9 +262,9 @@ public class ResultControllerMethods {
             int mark1 = Integer.parseInt(request.getParameter("mark1"));
             int mark2 = Integer.parseInt(request.getParameter("mark2"));
             
-            resultService rlsService = new resultService();
-            studentService stService = new studentService();
-            courseService crsService = new courseService();
+            ResultService rlsService = new ResultService();
+            StudentService stService = new StudentService();
+            CourseService crsService = new CourseService();
             
             Student st = stService.selectById(student_id);
             Course crs = crsService.selectById(course_id);
@@ -284,7 +284,7 @@ public class ResultControllerMethods {
 
 
              //prepared to forward to course_list
-            resultViewService rlsViewService = new resultViewService();
+            ResultViewService rlsViewService = new ResultViewService();
             List<Results_view> results_view = rlsViewService.select();
 
             request.setAttribute("results", results_view);

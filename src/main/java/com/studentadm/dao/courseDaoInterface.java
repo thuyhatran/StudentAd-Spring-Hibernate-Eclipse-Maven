@@ -5,7 +5,7 @@ import java.util.List;
 import com.studentadm.model.Course;
 
 
-public interface courseDaoInterface {
+public interface CourseDaoInterface {
 	
 	 public void insert(Course entity);
 		

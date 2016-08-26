@@ -13,7 +13,7 @@ import java.util.List;
  *
  * @author Administrator
  */
-public interface studentServiceInterface {
+public interface StudentServiceInterface {
     
     public void insert(Student entity);
 	

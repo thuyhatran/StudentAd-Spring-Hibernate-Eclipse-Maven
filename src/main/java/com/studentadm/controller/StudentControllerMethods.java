@@ -23,8 +23,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.studentadm.model.Student;
 import com.studentadm.model.StudentsGrade;
-import com.studentadm.service.resultService;
-import com.studentadm.service.studentService;
+import com.studentadm.service.ResultService;
+import com.studentadm.service.StudentService;
 
 
 /**
@@ -44,8 +44,8 @@ public class StudentControllerMethods {
     static public void newStudentCalled(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-         //studentService stService = new studentService();
-        studentService stService = new studentService(); 
+         //StudentService stService = new StudentService();
+        StudentService stService = new StudentService(); 
               
         int student_id = stService.getNewStudentID();
 
@@ -95,7 +95,7 @@ public class StudentControllerMethods {
     static public void listAllCalled(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        studentService stService = new studentService();  
+        StudentService stService = new StudentService();  
         List<Student> students = new ArrayList<>();     
         students =  stService.select();
 
@@ -119,11 +119,11 @@ public class StudentControllerMethods {
             int student_id = Integer.parseInt(request.getParameter("student_id"));
             
             //delete all result of this student
-            resultService rslSer = new resultService();
+            ResultService rslSer = new ResultService();
             rslSer.deleteStudent(student_id);
             
             //delete this student
-            studentService stService = new studentService();
+            StudentService stService = new StudentService();
             stService.delete(student_id);
             
             
@@ -153,7 +153,7 @@ public class StudentControllerMethods {
             
             //get student's info
             int student_id = Integer.parseInt(request.getParameter("student_id"));
-            studentService stService = new studentService();            
+            StudentService stService = new StudentService();            
             Student student = (Student)stService.selectById(student_id);                
             // set attribute 
             request.setAttribute("student_id", student_id);
@@ -237,7 +237,7 @@ public class StudentControllerMethods {
         }
 
         //Prepared for refresh page with student's list
-        studentService stService = new studentService();
+        StudentService stService = new StudentService();
         List<Student> students = new ArrayList<>();
         
         students =  stService.select();
@@ -262,7 +262,7 @@ public class StudentControllerMethods {
         
    
             
-            studentService stService = new studentService();
+            StudentService stService = new StudentService();
    
             //Prepared for refresh page with student's list
             List<StudentsGrade> stdGrade =  stService.getGrades();// = new ArrayList<>();
@@ -283,7 +283,7 @@ public class StudentControllerMethods {
             throws ServletException, IOException {
         
         int student_id = Integer.parseInt(request.getParameter("student_id"));
-        studentService stService = new studentService();
+        StudentService stService = new StudentService();
         
         List<StudentsGrade> students = stService.getTranscript(student_id);
         
@@ -322,7 +322,7 @@ public class StudentControllerMethods {
             
             Student st = new Student(student_id,firstName,lastName,gender,day+"-"+month+"-"+year,email);
             System.out.println(st);
-            studentService stService = new studentService();
+            StudentService stService = new StudentService();
        
              stService.insert(st);
 
@@ -346,10 +346,10 @@ public class StudentControllerMethods {
             int student_id = Integer.parseInt(request.getParameter("student_id"));
             
             //delete all result of this course
-            resultService rslSer = new resultService();
+            ResultService rslSer = new ResultService();
             rslSer.deleteStudent(student_id);
             
-            studentService stService = new studentService();
+            StudentService stService = new StudentService();
 //            stService.delete(student_id);
 
             //prepared to forward to student_list
@@ -376,7 +376,7 @@ public class StudentControllerMethods {
             
             if (!(st_student_id.equals(""))){
                 int student_id = Integer.parseInt(st_student_id);
-                studentService stService = new studentService();
+                StudentService stService = new StudentService();
 
      
                 student=(Student) stService.selectById(student_id);
@@ -437,7 +437,7 @@ public class StudentControllerMethods {
             
             Student st = new Student(student_id,firstName,lastName,gender,day+"-"+month+"-"+year,email);
             System.out.println(st);
-            studentService stService = new studentService();
+            StudentService stService = new StudentService();
        
              stService.update(st);
 

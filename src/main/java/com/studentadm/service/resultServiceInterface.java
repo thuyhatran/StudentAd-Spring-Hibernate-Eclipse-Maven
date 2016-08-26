@@ -12,7 +12,7 @@ import java.util.List;
  *
  * @author thuyha
  */
-public interface resultServiceInterface {
+public interface ResultServiceInterface {
     
     public void insert(Results entity);
 	

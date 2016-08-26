@@ -22,7 +22,6 @@ import javax.annotation.Resource;
 
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.studentadm.model.Course;
@@ -34,10 +33,9 @@ import com.studentadm.model.Course;
  */
 
 
-@Repository("courseDao")
-public class courseDao implements courseDaoInterface{
+@Repository
+public class CourseDao implements CourseDaoInterface{
     
-	@Autowired
 	private SessionFactory sessionFactory;
 	
 	public SessionFactory getSessionFactory() {
@@ -109,6 +107,7 @@ public class courseDao implements courseDaoInterface{
     @SuppressWarnings("unchecked")
 	@Override
     public void write_to_file(String filename) {
+       
 
         //Create a file
         File file = new File(filename);
@@ -120,7 +119,7 @@ public class courseDao implements courseDaoInterface{
             try {
                 file.createNewFile();
             } catch (IOException ex) {
-                Logger.getLogger(courseDao.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(CourseDao.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
 
@@ -134,7 +133,7 @@ public class courseDao implements courseDaoInterface{
         try {
             fout = new PrintWriter( new BufferedWriter (new FileWriter(file)));
         } catch (IOException ex) {
-            Logger.getLogger(courseDao.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CourseDao.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         for(Course crs:courses){
@@ -143,7 +142,6 @@ public class courseDao implements courseDaoInterface{
 
             fout.println(course_id +","+course_name);
         }
-        
         fout.close();
 
     }
@@ -162,14 +160,14 @@ public class courseDao implements courseDaoInterface{
             try {
                 fin = new BufferedReader( new FileReader(file));
             } catch (FileNotFoundException ex) {
-                Logger.getLogger(courseDao.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(CourseDao.class.getName()).log(Level.SEVERE, null, ex);
             }
             
             String line = null;
             try {
                 line = fin.readLine();
             } catch (IOException ex) {
-                Logger.getLogger(courseDao.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(CourseDao.class.getName()).log(Level.SEVERE, null, ex);
             }
             
              
@@ -191,7 +189,7 @@ public class courseDao implements courseDaoInterface{
                 try {
                     line = fin.readLine();
                 } catch (IOException ex) {
-                    Logger.getLogger(courseDao.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(CourseDao.class.getName()).log(Level.SEVERE, null, ex);
                 }            
             }
             
@@ -199,7 +197,7 @@ public class courseDao implements courseDaoInterface{
             try {                
                 fin.close();
             } catch (IOException ex) {
-                Logger.getLogger(courseDao.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(CourseDao.class.getName()).log(Level.SEVERE, null, ex);
             }
             
             System.out.println("end of inserting");

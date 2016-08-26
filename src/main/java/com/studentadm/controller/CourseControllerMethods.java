@@ -5,9 +5,9 @@
  */
 package com.studentadm.controller;
 
-import com.studentadm.service.courseService;
-import com.studentadm.service.resultService;
-import com.studentadm.service.studentService;
+import com.studentadm.service.CourseService;
+import com.studentadm.service.ResultService;
+import com.studentadm.service.StudentService;
 import com.studentadm.model.Course;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -29,14 +29,14 @@ public class CourseControllerMethods {
     static public void newCourseCalled(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-         studentService stService = new studentService(); 
+         StudentService stService = new StudentService(); 
               
         int student_id = stService.getNewStudentID();
         
         System.out.println("New  Student  ID : " + student_id);
 
         
-        courseService crsService = new courseService();
+        CourseService crsService = new CourseService();
                 
         int course_id = crsService.getNewCourseID();
 
@@ -87,7 +87,7 @@ public class CourseControllerMethods {
     static public void listAllCalled(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        courseService crsService = new courseService();
+        CourseService crsService = new CourseService();
         
         List<Course> courses = new ArrayList<>();     
               
@@ -106,11 +106,11 @@ public class CourseControllerMethods {
             int course_id = Integer.parseInt(request.getParameter("course_id"));
             
             //delete all result of this course
-            resultService rslSer = new resultService();
+            ResultService rslSer = new ResultService();
             rslSer.deleteCourse(course_id);
             
             //delete this course
-            courseService crsService = new courseService();
+            CourseService crsService = new CourseService();
             crsService.delete(course_id);
                       
             //Prepared for refresh page with course's list
@@ -133,7 +133,7 @@ public class CourseControllerMethods {
             
             //get course's info
             int course_id = Integer.parseInt(request.getParameter("course_id"));
-            courseService crsService = new courseService();            
+            CourseService crsService = new CourseService();            
             Course course = (Course)crsService.selectById(course_id);                
             // set attribute 
             request.setAttribute("course_id", course_id);            
@@ -166,7 +166,7 @@ public class CourseControllerMethods {
             
             Course crs = new Course(course_id,course_name);
             System.out.println(crs);
-            courseService crsDao = new courseService();
+            CourseService crsDao = new CourseService();
        
              crsDao.insert(crs);
 
@@ -183,11 +183,11 @@ public class CourseControllerMethods {
 //            int course_id = Integer.parseInt(request.getParameter("course_id"));
 //            
 //             //delete all result of this course
-////            resultService rslSer = new resultService();
+////            ResultService rslSer = new ResultService();
 ////            rslSer.deleteCourse(course_id);
 //            
 //            //delete this course
-//            courseService crsService = new courseService();
+//            CourseService crsService = new CourseService();
 //            crsService.delete(course_id);
 //
 //            //prepared to forward to course_list
@@ -227,7 +227,7 @@ public class CourseControllerMethods {
             
             if (!(st_course_id.equals(""))){
                 int course_id = Integer.parseInt(st_course_id);
-                courseService crsService = new courseService();
+                CourseService crsService = new CourseService();
 
                 course=(Course) crsService.selectById(course_id);
                 
@@ -269,7 +269,7 @@ public class CourseControllerMethods {
             
             Course st = new Course(course_id,course_name);
             System.out.println(st);
-            courseService crsService = new courseService();
+            CourseService crsService = new CourseService();
       
              crsService.update(st);
 

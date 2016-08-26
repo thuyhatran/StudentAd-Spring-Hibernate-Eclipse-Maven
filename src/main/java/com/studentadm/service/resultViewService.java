@@ -7,7 +7,7 @@ package com.studentadm.service;
 
 import com.studentadm.model.Results;
 import com.studentadm.model.Results_view;
-import com.studentadm.dao.resultDao;
+import com.studentadm.dao.ResultDao;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,13 +18,13 @@ import org.springframework.transaction.annotation.Transactional;
  *
  * @author thuyha
  */
-@Service("resultViewService")
-public class resultViewService implements resultViewServiceInterface{
+@Service("ResultViewService")
+public class ResultViewService implements ResultViewServiceInterface{
     
-    private static resultDao stDao;
+    private static ResultDao stDao;
     
-    public resultViewService() {
-        stDao = new resultDao();
+    public ResultViewService() {
+        stDao = new ResultDao();
     }
         
     @Override

@@ -55,23 +55,23 @@
 	    </property>  
 	</bean>  
 	
-    <bean id="studentDao" class="com.studentadm.dao.studentDao">
+    <bean id="studentDao" class="com.studentadm.dao.StudentDao">
     	<property name="sessionFactory" ref="sessionFactory"></property>
     </bean>
-    <bean id="courseDao" class="com.studentadm.dao.courseDao">
+    <bean id="courseDao" class="com.studentadm.dao.CourseDao">
     	<property name="sessionFactory" ref="sessionFactory"></property>
     </bean>
-    <bean id="resultDao" class="com.studentadm.dao.resultDao">
+    <bean id="resultDao" class="com.studentadm.dao.ResultDao">
     	<property name="sessionFactory" ref="sessionFactory"></property>
     </bean>
     
-    <bean id="studentService" class="com.studentadm.service.studentService">
+    <bean id="studentService" class="com.studentadm.service.StudentService">
     	<property name="stDao" ref="studentDao"></property>
     </bean>
-    <bean id="courseService" class="com.studentadm.service.courseService">
+    <bean id="courseService" class="com.studentadm.service.CourseService">
     	<property name="crsDao" ref="courseDao"></property>
     </bean>
-    <bean id="resultService" class="com.studentadm.service.resultService">
+    <bean id="resultService" class="com.studentadm.service.ResultService">
     	<property name="rslDao" ref="resultDao"></property>
     </bean>
     

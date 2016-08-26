@@ -2,7 +2,7 @@ package com.studentadm.dao;
 
 import java.util.List;
 
-public interface resultDaoInterface<T> {
+public interface ResultDaoInterface<T> {
 	   public void insert(T entity);
 		
 	    public void update(T entity);

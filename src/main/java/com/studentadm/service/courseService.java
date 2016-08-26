@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.studentadm.dao.courseDao;
+import com.studentadm.dao.CourseDao;
 import com.studentadm.model.Course;
 
 /**
@@ -22,21 +22,21 @@ import com.studentadm.model.Course;
 
 @Service("courseService")
 @Transactional
-public class courseService implements courseServiceInterface{
+public class CourseService implements CourseServiceInterface{
     
 	
-    private static courseDao crsDao;
+    private static CourseDao crsDao;
 
-   public courseService() {
-	        crsDao = new courseDao();
+   public CourseService() {
+	        crsDao = new CourseDao();
 	    }
     
-    public static courseDao getCrsDao() {
+    public static CourseDao getCrsDao() {
     	return crsDao;
     }
 
-	public static void setCrsDao(courseDao crsDao) {
-		courseService.crsDao = crsDao;
+	public static void setCrsDao(CourseDao crsDao) {
+		CourseService.crsDao = crsDao;
 	}
 
 

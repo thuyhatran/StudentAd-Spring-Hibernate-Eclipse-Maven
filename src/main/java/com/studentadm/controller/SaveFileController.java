@@ -1,9 +1,9 @@
 
 package com.studentadm.controller;
 
-import com.studentadm.service.courseService;
-import com.studentadm.service.resultService;
-import com.studentadm.service.studentService;
+import com.studentadm.service.CourseService;
+import com.studentadm.service.ResultService;
+import com.studentadm.service.StudentService;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -95,7 +95,7 @@ public class SaveFileController extends HttpServlet {
                 
                 if (imptStudent!=null){
 
-                        studentService stService = new studentService();
+                        StudentService stService = new StudentService();
                         if (fnStudent!=null)
                             stService.write_to_file(fnStudent);
                         else
@@ -105,7 +105,7 @@ public class SaveFileController extends HttpServlet {
 
                  if (imptCourse!=null){
                 
-                        courseService stService = new courseService();
+                        CourseService stService = new CourseService();
                         if (fnCourse!=null)
                             stService.write_to_file(fnCourse);
                         else
@@ -115,7 +115,7 @@ public class SaveFileController extends HttpServlet {
 
                   if (imptResult!=null){
                    
-                        resultService stService = new resultService();
+                        ResultService stService = new ResultService();
                         if (fnResult!=null)
                             stService.write_to_file(fnResult);
                         else
@@ -129,7 +129,7 @@ public class SaveFileController extends HttpServlet {
                 
                  if (imptStudent!=null){
                      System.out.println("Student: " + imptStudent);
-                     studentService stService = new studentService();
+                     StudentService stService = new StudentService();
                      if (fnStudent!=null)
                          stService.insert_from_file(fnStudent);
                      else
@@ -140,7 +140,7 @@ public class SaveFileController extends HttpServlet {
                   
                         System.out.println("Course: " + imptCourse);
 
-                        courseService stService = new courseService();
+                        CourseService stService = new CourseService();
                         if (fnCourse!=null)
                             stService.insert_from_file(fnCourse);
                         else
@@ -152,7 +152,7 @@ public class SaveFileController extends HttpServlet {
                  
                         System.out.println("Result: " + imptResult);
 
-                        resultService stService = new resultService();
+                        ResultService stService = new ResultService();
                         if (fnResult!=null)
                             stService.insert_from_file(fnResult);
                         else

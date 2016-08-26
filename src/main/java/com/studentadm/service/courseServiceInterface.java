@@ -12,7 +12,7 @@ import java.util.List;
  *
  * @author Administrator
  */
-public interface courseServiceInterface {
+public interface CourseServiceInterface {
     
     public void insert(Course entity);
 	

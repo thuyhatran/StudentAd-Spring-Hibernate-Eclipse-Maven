@@ -12,15 +12,12 @@ import java.util.List;
  *
  * @author thuyha
  */
-public interface resultViewServiceInterface {
+public interface ResultViewServiceInterface {
  
 	
     public Results_view selectById(int st_id, int crs_id);
 	
- 
-    
     public List<Results_view> select();
-    
     
     
     
