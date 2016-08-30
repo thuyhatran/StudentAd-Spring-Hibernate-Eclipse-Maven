@@ -56,6 +56,22 @@ public class CourseController{
        return "course_list";
    }	
  
+   //Open Course Form
+   @RequestMapping(value = { "/form" }, method = RequestMethod.GET)
+   public String formCourse(ModelMap model){
+	   
+	   model.addAttribute("id_readonly","");  //set course_id field to non-readonly
+	   model.addAttribute("new_disabled", "");
+	   model.addAttribute("insert_disabled", "disabled");
+	   model.addAttribute("update_disabled", "disabled");
+	   model.addAttribute("search_disabled", "");
+	   model.addAttribute("delete_disabled", "disabled");
+	   
+	   return "course_form";
+   }
+   
+   
+   
    @RequestMapping(value = { "/new" }, method = RequestMethod.GET)
    public String newCourse(ModelMap model) {
 	   
@@ -68,7 +84,7 @@ public class CourseController{
       // model.addAttribute("edit", false);
        
        model.addAttribute("course_id", course_id);
-       model.addAttribute("stid_readonly","readonly");  //set course_id field to readonly
+       model.addAttribute("id_readonly","readonly");  //set course_id field to readonly
        model.addAttribute("new_disabled", "disabled");
        model.addAttribute("insert_disabled", "");
        model.addAttribute("update_disabled", "disabled");
@@ -86,11 +102,11 @@ public class CourseController{
 	   
 	   log.debug(" new course inserted" + course);
 	   
-	   return "redirect:/listall";  //after inserting, display all courses
+	   return "redirect:/course/listall";  //after inserting, display all courses
    }
    
    //Update a course
-   @RequestMapping(value = {"/edit{course_id"}, method = RequestMethod.GET)
+   @RequestMapping(value = {"/edit{course_id}"}, method = RequestMethod.GET)
    public String editCourse(@PathVariable int course_id, ModelMap model){
 	   
 	   Course course = courseService.selectById(course_id);
@@ -109,14 +125,14 @@ public class CourseController{
    }
    
    //Update a course
-   @RequestMapping(value = {"/edit{course_id"}, method = RequestMethod.POST)
+   @RequestMapping(value = {"/edit{course_id}"}, method = RequestMethod.POST)
    public String updateCourse(Course course){
 	   
 	   courseService.update(course);
 	   
 	   log.debug(" course updated" + course);
 	   
-	   return "redirect:/listall";
+	   return "redirect:/course/listall";
 	   
    }
    
@@ -133,7 +149,7 @@ public class CourseController{
        
        log.debug(" Delete course " + course_id + " and all related results");
  
-       return "redirect:/listall";
+       return "redirect:/course/listall";
 	   
    }
    
@@ -159,7 +175,7 @@ public class CourseController{
             model.addAttribute("course_id", course_id);
             model.addAttribute("course", course);
             model.addAttribute("insert_disabled", "disabled");
-            model.addAttribute("stid_readonly","");
+            model.addAttribute("id_readonly","");
        }
 
 

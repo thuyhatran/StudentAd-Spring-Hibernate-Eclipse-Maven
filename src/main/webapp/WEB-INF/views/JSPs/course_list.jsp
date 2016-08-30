@@ -36,17 +36,11 @@
                    <tr>
                        <td><c:out value ="${st.course_id}" /></td>
                        <td><c:out value ="${st.course_name}" /></td>
-                      
-                       <td><a href="<c:url value ='/CourseController'>
-                              <c:param name="course_id" value ="${st.course_id}" />
-                              <c:param name="action" value ="Edit" />
-                              </c:url>">Edit</a></td>
                        
-                       <td><a href="<c:url value ='/CourseController'>
-                              <c:param name="course_id" value ="${st.course_id}" />
-                              <c:param name="action" value ="Delete" />
-                              </c:url>">Delete</a></td>                                        
-
+                       <td><a href="<c:url value ='/course/edit${st.course_id}'/>">Edit</a></td>
+                       <td><a href="<c:url value ='/course/delete${st.course_id}'/>">Delete</a></td>
+                      
+                   
                    </tr>
 
                </c:forEach>

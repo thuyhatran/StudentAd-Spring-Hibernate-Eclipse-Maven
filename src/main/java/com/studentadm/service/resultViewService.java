@@ -18,20 +18,37 @@ import org.springframework.transaction.annotation.Transactional;
  *
  * @author thuyha
  */
-@Service("ResultViewService")
+@Service
 public class ResultViewService implements ResultViewServiceInterface{
     
-    private static ResultDao stDao;
+    private static ResultDao rslDao;
     
     public ResultViewService() {
-        stDao = new ResultDao();
+    	rslDao = new ResultDao();
     }
+    
+    
+    
         
-    @Override
+    public static ResultDao getRslDao() {
+		return rslDao;
+	}
+
+
+
+
+	public static void setRslDao(ResultDao rslDao) {
+		ResultViewService.rslDao = rslDao;
+	}
+
+
+
+
+	@Override
     @Transactional
     public Results_view selectById(int st_id, int crs_id) {
 
-        Results st = stDao.selectById(st_id, crs_id);
+        Results st = rslDao.selectById(st_id, crs_id);
 
         Results_view rls_view = new Results_view(st);
         return rls_view; 
@@ -43,7 +60,7 @@ public class ResultViewService implements ResultViewServiceInterface{
     @Transactional
     public List<Results_view> select() {
 
-        List<Results> results = stDao.select();
+        List<Results> results = rslDao.select();
         
         List<Results_view> results_view = new ArrayList<>();
         Results_view result_view = null;

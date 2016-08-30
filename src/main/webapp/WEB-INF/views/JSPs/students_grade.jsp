@@ -11,7 +11,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <style type="text/css"> <%@include file="/WEB-INF/views/CSSs/student_grade.css" %></style>
+        <style type="text/css"> <%@include file="/WEB-INF/views/CSSs/students_grade.css" %></style>
        <!--  <link rel="stylesheet" type="text/css" href="CSSs/student_list.css"> -->
         <title>Student List</title>
     </head>

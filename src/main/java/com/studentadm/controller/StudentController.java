@@ -5,191 +5,292 @@
  */
 package com.studentadm.controller;
 
-import java.io.IOException;
+import java.util.List;
+import java.util.Properties;
 
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 
-/**
- *
- * @author Administrator
- */
-@SuppressWarnings("serial")
-@WebServlet(name = "StudentController", urlPatterns = {"/StudentController"})
-public class StudentController extends HttpServlet {
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
-//    /**
-//     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-//     * methods.
-//     *
-//     * @param request servlet request
-//     * @param response servlet response
-//     * @throws ServletException if a servlet-specific error occurs
-//     * @throws IOException if an I/O error occurs
-//     */
-//    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-//            throws ServletException, IOException {
-//        response.setContentType("text/html;charset=UTF-8");
-//        try (PrintWriter out = response.getWriter()) {
-//            /* TODO output your page here. You may use following sample code. */
-//            out.println("<!DOCTYPE html>");
-//            out.println("<html>");
-//            out.println("<head>");
-//            out.println("<title>Servlet StudentController</title>");            
-//            out.println("</head>");
-//            out.println("<body>");
-//            out.println("<h1>Servlet StudentController at " + request.getContextPath() + "</h1>");
-//            out.println("</body>");
-//            out.println("</html>");
-//        }
-//    }
+import com.studentadm.model.Student;
+import com.studentadm.model.StudentsGrade;
+import com.studentadm.service.StudentService;
+import com.studentadm.service.ResultService;
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-       // processRequest(request, response);
-        
-        String action = request.getParameter("action");
+import org.apache.log4j.Logger;
 
-        String url;
-        switch (action){
-            case "StudentForm":  //Call from menu
-                StudentControllerMethods.studentFormCalled(request, response);
-                url ="/WEB-INF/views/JSPs/student_form.jsp";
-                getServletContext().getRequestDispatcher(url).forward(request, response);
-                break;
-            case "ListAll":  //Call from menu
-               StudentControllerMethods.listAllCalled(request, response);
-               url ="/WEB-INF/views/JSPs/student_list.jsp";
-               getServletContext().getRequestDispatcher(url).forward(request, response);
-                break;
-                
-            case "Delete":  //Call from student_list
-                StudentControllerMethods.deleteCalled(request, response);
-                url ="/WEB-INF/views/JSPs/student_list.jsp";
-                getServletContext().getRequestDispatcher(url).forward(request, response);
-                break;
-            case "Edit":  //Call from student_list
-                StudentControllerMethods.editCalled(request, response);
-                url ="/WEB-INF/views/JSPs/student_form.jsp";
-                getServletContext().getRequestDispatcher(url).forward(request, response);
-                break;
-                
-                          
-            case "StudentsGrade":
-                StudentControllerMethods.studentGradeCalled(request, response);
-                url ="/WEB-INF/views/JSPs/students_grade.jsp";
-                getServletContext().getRequestDispatcher(url).forward(request, response); 
-                break;
-                
-            case "Transcript":
-                StudentControllerMethods.transcriptCalled(request, response);
-                url ="/WEB-INF/views/JSPs/student_transcript.jsp";
-                getServletContext().getRequestDispatcher(url).forward(request, response); 
-                break;
-                
-                
-            default:
-                url ="/WEB-INF/views/JSPs/main.jsp";
-                getServletContext().getRequestDispatcher(url).forward(request, response);
-                
-                    
-        }
-            
+
+@Controller
+@RequestMapping("/student")
+public class StudentController{
+	
+	//initializing the logger
+    static Logger log = Logger.getLogger(StudentController.class.getName());
+	
+	@Autowired
+    StudentService studentService;
+	
+	@Autowired
+    ResultService resultService;
+	
+    /*
+    * Display all students.
+    * path is "/student" or "/student/list_student"  after application path
+    * 
+    */
+   @RequestMapping(value = { "/", "/listall" }, method = RequestMethod.GET)
+   public String listStudent(ModelMap model) {
+   	
+       List<Student> students = studentService.select();
+       
+       for (Student student:students)
+       		log.debug(student);
+       
+       model.addAttribute("students", students);
+       
+       return "student_list";
+   }	
  
-        
-        
  
-    }
-
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
    
-            
-            String submit = request.getParameter("submit");
-            
-            System.out.print("------- submit : "+submit+"------------");
-            
-            switch (submit){
-                case "Send":
-                    //System.out.println("Before sending email");
-                    StudentControllerMethods.emailSendCalled(request, response);
-                   // System.out.println("After sending email");
-                    String url ="/WEB-INF/views/JSPs/student_list.jsp";
-                    getServletContext().getRequestDispatcher(url).forward(request, response);
-                    
-                    break;
-                    
-                case "New":
-                    
-                    StudentControllerMethods.newStudentCalled(request, response);
-                    url ="/WEB-INF/views/JSPs/student_form.jsp";
-                    getServletContext().getRequestDispatcher(url).forward(request, response);
-                    break;
-                    
-                case "Insert":                    
-                    StudentControllerMethods.insertClicked(request, response);
-                    url ="/WEB-INF/views/JSPs/student_list.jsp";
-                    getServletContext().getRequestDispatcher(url).forward(request, response);
-                    break;
-
-                case "Delete":
-                    StudentControllerMethods.deleteClicked(request, response);
-                    url ="/WEB-INF/views/JSPs/student_list.jsp";
-                    getServletContext().getRequestDispatcher(url).forward(request, response);
-                    break;
-
-                case "Update":
-                    //StudentControllerMethods.emailSendCalled(request, response);
-                    StudentControllerMethods.updateClicked(request, response);
-                    url ="/WEB-INF/views/JSPs/student_list.jsp";
-                    getServletContext().getRequestDispatcher(url).forward(request, response);
-                    break;
-
-                case "Search":
-                    StudentControllerMethods.searchClicked(request, response);
-                    url ="/WEB-INF/views/JSPs/student_form.jsp";
-                    getServletContext().getRequestDispatcher(url).forward(request, response);
-                    break;
-
-                default:
-                    url ="/WEB-INF/views/JSPs/main.jsp";
-                    getServletContext().getRequestDispatcher(url).forward(request, response);    
-
-                    
-            }
+   @RequestMapping(value = { "/form" }, method = RequestMethod.GET)
+   public String formStudent(ModelMap model){
+	   
+	   model.addAttribute("stid_readonly","");  //set student_id field to readonly
+	   model.addAttribute("new_disabled", "");
+	   model.addAttribute("insert_disabled", "disabled");
+	   model.addAttribute("update_disabled", "disabled");
+	   model.addAttribute("search_disabled", "");
+	   model.addAttribute("delete_disabled", "disabled");
+	   
+	   return "student_form";
+   }
    
-    }
+   
+   
+   
+   @RequestMapping(value = { "/new" }, method = RequestMethod.GET)
+   public String newStudent(ModelMap model) {
+	   
+	   int student_id = studentService.getNewStudentID();
+       Student student = new Student(student_id);
+       
+       log.debug("Creating ... new student");
+       
+       model.addAttribute("student", student);
+      // model.addAttribute("edit", false);
+       
+       model.addAttribute("student_id", student_id);
+       model.addAttribute("stid_readonly","readonly");  //set student_id field to readonly
+       model.addAttribute("new_disabled", "disabled");
+       model.addAttribute("insert_disabled", "");
+       model.addAttribute("update_disabled", "disabled");
+       model.addAttribute("search_disabled", "disabled");
+       model.addAttribute("delete_disabled", "disabled");
+       
+       return "student_form";
+   }
+   
+   // Insert/save new student
+   @RequestMapping(value={"/new"}, method = RequestMethod.POST)
+   public String insertStudent(Student student){
+	   
+	   studentService.insert(student);
+	   
+	   log.debug(" new student inserted" + student);
+	   
+	   return "redirect:/student/listall";  //after inserting, display all students
+   }
+   
+   
+   
+   //Update a student
+   @RequestMapping(value = {"/edit{student_id}"}, method = RequestMethod.GET)
+   public String editStudent(@PathVariable int student_id, ModelMap model){
+	   
+	   Student student = studentService.selectById(student_id);
+	   model.addAttribute("student",student);
+	   
+	   model.addAttribute("id_readonly","readonly");  //set student_id field to readonly          
+       
+       model.addAttribute("new_disabled", "disabled");
+       model.addAttribute("insert_disabled", "disabled");
+       model.addAttribute("update_disabled", "");
+       model.addAttribute("search_disabled", "disabled");
+       model.addAttribute("delete_disabled", "");
+	   
+	   return "student_form";
+	   
+   }
+   
+   //Update a student
+   @RequestMapping(value = {"/edit{student_id}"}, method = RequestMethod.POST)
+   public String updateStudent(Student student){
+	   
+	   studentService.update(student);
+	   
+	   log.debug(" student updated" + student);
+	   
+	   return "redirect:/student/listall";
+	   
+   }
+   
+   
+   //Delete a student  
+   @RequestMapping(value = {"/delete{student_id}"}, method = RequestMethod.GET)
+   public String deleteStudent(@PathVariable int student_id){
+	   
+	   //delete all result of this student   
+       resultService.deleteStudent(student_id);
+       
+       //delete this student    
+       studentService.delete(student_id);
+       
+       log.debug(" Delete student " + student_id + " and all related results");
+ 
+       return "redirect:/student/listall";
+	   
+   }
+   
+   //Display a student  
+   @RequestMapping(value = {"/find{student_id}"}, method = RequestMethod.GET)
+   public String displayStudent(@PathVariable int student_id, ModelMap model){
+	   
+	   Student student = studentService.selectById(student_id);
+	   
+	   log.debug(student);
+	   
+       if (student ==null){
+           
+            model.addAttribute("insert_disabled", "disabled");
+            model.addAttribute("update_disabled","disabled");
+            model.addAttribute("delete_disabled","disabled");
+           
+       }else{
+                   
+            model.addAttribute("student_id", student_id);
+            model.addAttribute("student", student);
+            model.addAttribute("insert_disabled", "disabled");
+            model.addAttribute("stid_readonly","");
+       }
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
+       return "student_form"; 
+   }
+   
+   // Display all grades
+   @RequestMapping(value = { "/grades" }, method = RequestMethod.GET)
+   public String studentGrades(ModelMap model) {
+
+       List<StudentsGrade> stdGrade = studentService.getGrades();
+              
+       model.addAttribute("studentsGrade", stdGrade);
+       
+       return "students_grade";
+   }
+   
+   
+   //Student Transcript
+   @RequestMapping(value = { "/transcript{student_id}" }, method = RequestMethod.GET)
+   public String studentTranscript(@PathVariable int student_id, ModelMap model) {
+	   
+       List<StudentsGrade> stdGrade = studentService.getTranscript(student_id);
+              
+       model.addAttribute("students", stdGrade);
+       
+       return "student_transcript";
+   }
+   
+   //Open email form
+   @RequestMapping(value = { "/email{address}" }, method = RequestMethod.GET)
+   public String emailForm(@PathVariable String address, ModelMap model) {  
+              
+       model.addAttribute("email", address);
+       
+       return "email_form";
+   }
+   
+   
+   //sending email
+   @RequestMapping(value = { "/email{address}" }, method = RequestMethod.POST)
+   public String emailSend(@PathVariable String address, @RequestParam String subject,  @RequestParam String content  ){
+	   
+
+	   final String username="javacourse2016@gmail.com";
+       final String password ="";
+       Properties props = new Properties();
+       props.put("mail.smtp.auth", "true");
+       props.put("mail.smtp.starttls.enable", "true");
+       props.put("mail.smtp.host", "smtp.gmail.com");
+       props.put("mail.smtp.port", "587");
+       //Session session = Session.getDefaultInstance(props);
+       Session session = Session.getInstance(props,
+       new javax.mail.Authenticator() {
+               protected PasswordAuthentication getPasswordAuthentication() {
+                       return new PasswordAuthentication(username, password);
+               }
+         });   
+
+       try {
+
+               Message message = new MimeMessage(session);
+               message.setFrom(new InternetAddress("javacourse2016@gmail.com"));
+               message.setRecipients(Message.RecipientType.TO,
+               InternetAddress.parse(address));
+               message.setSubject(subject);
+               message.setText(content);
+
+               Transport.send(message);
+
+               System.out.println("Done");
+
+       } catch (MessagingException e) {
+               throw new RuntimeException(e);
+       }
+
+ 
+       return "redirect:/student/listall";
+	   
+   }
+   
+   
+   
+   
+   
+   
+   /*
+   //This way below is working similar to String listStudent() above (return a string), this is the way of older String version
+   @RequestMapping(value="/list_student", method=RequestMethod.GET)
+	public ModelAndView listStudent(){
+   	
+		ModelAndView model = new ModelAndView("student_list");
+		
+		 List<Student> students = studentService.select();
+	        
+	        for (Student student1:students)
+	        	System.out.println(student1);
+	        
+	       model.addObject(students);
+
+		return model;
+	}
+	*/
+   
 
 }
+
+
+
+
+

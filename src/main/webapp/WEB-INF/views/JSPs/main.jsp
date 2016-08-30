@@ -29,26 +29,19 @@
 	    </header>
 	    
 	    <section>
-	        
-	       
+
 	        
 	        <h2 style="text-align: center; color:green">Student Administration</h2>
 	        <div class="dropdown">
 	          <button class="dropbtn">Student</button>
 	          <div class="dropdown-content">
 	              
-	            <a href="<c:url value ='/StudentController'>            
-	                   <c:param name="action" value ="StudentForm" />
-	                   </c:url>">Student Form</a>
+	            <a href="<c:url value ='/student/form'/>">Student Form</a>	
 	            
-	                    
-	            <a href="<c:url value ='/StudentController'>            
-	                   <c:param name="action" value ="ListAll" />
-	                   </c:url>">Student List</a>
+	            <a href="<c:url value ='/student/listall'/>">Student List</a>	
+	                         
+	            <a href="<c:url value ='/student/grades'/>">Student Grade</a>	        
 	            
-	            <a href="<c:url value ='/StudentController'>            
-	                   <c:param name="action" value ="StudentsGrade" />
-	                   </c:url>">Student Grade</a> 
 	              
 	          </div>
 	        </div>
@@ -56,14 +49,10 @@
 	        <div class="dropdown">
 	          <button class="dropbtn">Course</button>
 	          <div class="dropdown-content">
-	             <a href="<c:url value ='/CourseController'>            
-	                   <c:param name="action" value ="CourseForm" />
-	                   </c:url>">Course Form</a>
-	              
-	            <a href="<c:url value ='/CourseController'>            
-	                   <c:param name="action" value ="ListAll" />
-	                   </c:url>">Course List</a>
-	              
+	          	
+	          	<a href="<c:url value ='/course/form'/>">Course Form</a>	
+	          	<a href="<c:url value ='/course/listall'/>">Course List</a>	
+	                        
 	          </div>
 	        </div> 
 	
@@ -71,13 +60,8 @@
 	          <button class="dropbtn">Result</button>
 	          <div class="dropdown-content">
 	              
-	             <a href="<c:url value ='/ResultController'>            
-	                   <c:param name="action" value ="ResultForm" />
-	                   </c:url>">Result Update</a>
-	              
-	            <a href="<c:url value ='/ResultController'>            
-	                   <c:param name="action" value ="ListAll" />
-	                   </c:url>">Results</a>
+	            <a href="<c:url value ='/result/form'/>">Result Form</a>	
+	          	<a href="<c:url value ='/result/listall'/>">Result List</a>	
 	            
 	          </div>
 	        </div> 

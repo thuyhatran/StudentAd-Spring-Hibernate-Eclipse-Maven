@@ -41,35 +41,13 @@
                        <td><c:out value ="${st.gender}" /></td>
                        <td><c:out value ="${st.email}" /></td>
                        <td><c:out value ="${st.start_date}" /></td>
-                       <td><a href="<c:url value ='/StudentController'>
-                              <c:param name="student_id" value ="${st.student_id}" />
-                              <c:param name="action" value ="Edit" />
-                              </c:url>">Edit</a></td>
                        
-                       <td><a href="<c:url value ='/StudentController'>
-                              <c:param name="student_id" value ="${st.student_id}" />
-                              <c:param name="action" value ="Delete" />
-                              </c:url>">Delete</a></td>
-                       
-                        <td>
-                            <a href="<c:url value ="/WEB-INF/views/JSPs/email_form.jsp?email=${st.email}"/>">Email</a>
-                            
-                           <%-- <a href="<c:url value ='/StudentController'>  
-                             <c:param name="email" value ="${st.email}" /> 
-                              <c:param name="action" value ="Email" />
-                              </c:url>">Email</a>  --%>
-                            
-                            <%-- <a href="<c:url value ="/JSPs/email_form.jsp">
-                               <c:param name="email" value ="${st.email}" />
-                             </c:url>">Email</a>  --%>
-
-                        </td>
-                         
-  
-                        <td><a href="<c:url value ='/StudentController'>
-                              <c:param name="student_id" value ="${st.student_id}" />                             
-                              <c:param name="action" value ="Transcript" />
-                              </c:url>">Transcript</a></td>
+                        
+                       <td><a href="<c:url value ='/student/edit${st.student_id}'/>">Edit</a></td>
+                       <td><a href="<c:url value ='/student/delete${st.student_id}'/>">Delete</a></td>
+                       <td><a href="<c:url value ='/student/email${st.email}'/>">Email</a></td>
+                       <td><a href="<c:url value ='/student/transcript${st.student_id}'/>">Transcript</a></td>
+                      
 
                    </tr>
 

@@ -77,11 +77,11 @@ public class Student implements Serializable {
        
       
     public Student() {
-        this.results = new HashSet<Results>();
+       
     }
 
-    Student(int student_id) {
-       this.results = new HashSet<Results>();
+    public Student(int student_id) {
+      
         this.student_id = student_id;
     }
 

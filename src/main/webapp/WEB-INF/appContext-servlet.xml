@@ -75,6 +75,9 @@
     	<property name="rslDao" ref="resultDao"></property>
     </bean>
     
+    <bean id="resultViewService" class="com.studentadm.service.ResultViewService">
+    	<property name="rslDao" ref="resultDao"></property>
+    </bean>
     
     
     <tx:annotation-driven transaction-manager="transactionManager"/>

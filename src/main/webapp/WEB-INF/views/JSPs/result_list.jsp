@@ -40,18 +40,10 @@
                        <td><c:out value ="${st.course_id}" /></td>
                        <td><c:out value ="${st.mark1}" /></td>
                        <td><c:out value ="${st.mark2}" /></td>
-                      
-                       <td><a href="<c:url value ='/ResultController'>
-                              <c:param name="student_id" value ="${st.student_id}" />
-                              <c:param name="course_id" value ="${st.course_id}" />
-                              <c:param name="action" value ="Edit" />
-                              </c:url>">Edit</a></td>
                        
-                       <td><a href="<c:url value ='/ResultController'>
-                              <c:param name="student_id" value ="${st.student_id}" />
-                              <c:param name="course_id" value ="${st.course_id}" />
-                              <c:param name="action" value ="Delete" />
-                              </c:url>">Delete</a></td>                                        
+                       <td><a href="<c:url value ='/result/edit${st.student_id}/${st.course_id}'/>">Edit</a></td>
+                       <td><a href="<c:url value ='/result/delete${st.student_id}/${st.course_id}'/>">Delete</a></td>
+                                                             
 
                    </tr>
 
