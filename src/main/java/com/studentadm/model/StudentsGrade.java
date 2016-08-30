@@ -37,7 +37,6 @@ public class StudentsGrade {
     }
     
     
-    
     public StudentsGrade(int student_id, String first_name, String last_name, String gender, String course, int mark1, int mark2) {
         this.student_id = student_id;
         this.first_name = first_name;
@@ -54,7 +53,6 @@ public class StudentsGrade {
         this.first_name = first_name;
         this.last_name = last_name;
         this.gender = gender;
-
     }
     
 

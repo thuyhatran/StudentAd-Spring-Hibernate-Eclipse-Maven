@@ -18,7 +18,7 @@ import javax.persistence.Table;
 
 /**
  *
- * @author Administrator
+ * @author Thuy Ha
  */
 @SuppressWarnings("serial")
 @Entity

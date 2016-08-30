@@ -31,6 +31,11 @@ import com.studentadm.service.ResultService;
 
 import org.apache.log4j.Logger;
 
+/**
+*
+* @author Thuy Ha
+* 
+*/
 
 @Controller
 @RequestMapping("/student")

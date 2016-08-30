@@ -14,6 +14,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.studentadm.model.Course;
 import com.studentadm.service.CourseService;
@@ -24,6 +25,7 @@ import org.apache.log4j.Logger;
 /**
  *
  * @author Thuy Ha
+ * 
  */
 
 @Controller
@@ -94,18 +96,8 @@ public class CourseController{
        return "course_form";
    }
    
-   // Insert/save new course
-   @RequestMapping(value={"/new"}, method = RequestMethod.POST)
-   public String insertCourse(Course course, ModelMap model){
-	   
-	   courseService.insert(course);
-	   
-	   log.debug(" new course inserted" + course);
-	   
-	   return "redirect:/course/listall";  //after inserting, display all courses
-   }
    
-   //Update a course
+   //Edit a course
    @RequestMapping(value = {"/edit{course_id}"}, method = RequestMethod.GET)
    public String editCourse(@PathVariable int course_id, ModelMap model){
 	   
@@ -121,18 +113,6 @@ public class CourseController{
        model.addAttribute("delete_disabled", "");
 	   
 	   return "course_form";
-	   
-   }
-   
-   //Update a course
-   @RequestMapping(value = {"/edit{course_id}"}, method = RequestMethod.POST)
-   public String updateCourse(Course course){
-	   
-	   courseService.update(course);
-	   
-	   log.debug(" course updated" + course);
-	   
-	   return "redirect:/course/listall";
 	   
    }
    
@@ -181,6 +161,83 @@ public class CourseController{
 
        return "course_form"; 
    }
+   
+   //---------------------------------------------------
+   //
+   // All methods related to button clicked in course_form
+   //
+   //----------------------------------------------------
+   
+   @RequestMapping(value = "courseProcess", params ="new", method = RequestMethod.POST)
+   public String newCourseClicked() {
+
+       return "redirect:/course/new";
+   }
+   
+   //Update a course
+   @RequestMapping(value = "courseProcess", params ="update", method = RequestMethod.POST)
+   public String updateCourse(Course course){
+	   
+	   courseService.update(course);
+	   
+	   log.debug(" course updated" + course);
+	   
+	   return "redirect:/course/listall";
+	   
+   }
+   
+   //Insert a course
+   @RequestMapping(value = "courseProcess", params ="insert", method = RequestMethod.POST)
+   public String insertCourse(Course course){
+	   
+	   courseService.insert(course);
+	   
+	   log.debug(" new course inserted" + course);
+	   
+	   return "redirect:/course/listall";  //after inserting, display all courses
+   }
+   
+  @RequestMapping(value = "courseProcess", params ="delete", method = RequestMethod.POST)
+   public String deleteCourseClicked(@RequestParam("course_id") int course_id){
+	   
+ 
+       return "redirect:/course/delete"+course_id;
+   }
+   
+   
+ //Display a course  
+   @RequestMapping(value = "courseProcess", params ="search", method = RequestMethod.POST)
+   public String searchCourse(@RequestParam("course_id") int course_id, ModelMap model){
+	   
+	 /*  Course course = courseService.selectById(course_id);
+	   
+	   log.debug(course);
+	   
+       if (course ==null){
+           
+           //JFrame parent = new JFrame();
+           //JOptionPane.showMessageDialog(null, "Not found!");
+        
+            model.addAttribute("insert_disabled", "disabled");
+            model.addAttribute("update_disabled","disabled");
+            model.addAttribute("delete_disabled","disabled");
+           
+       }else{
+                   
+            model.addAttribute("course_id", course_id);
+            model.addAttribute("course", course);
+            model.addAttribute("insert_disabled", "disabled");
+            model.addAttribute("id_readonly","");
+       }
+       
+       return course_form;
+       */
+
+	   //use this code above or simple use only one code below if displayCourse is (/course/find{course_id}) already written.
+
+       return "redirect:/course/find"+course_id; 
+   }
+   
    
    
    /*

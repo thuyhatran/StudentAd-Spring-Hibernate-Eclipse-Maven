@@ -28,7 +28,7 @@ import com.studentadm.model.Course;
 
 /**
  *
- * @author Administrator
+ * @author Thuy Ha
  * 
  */
 
