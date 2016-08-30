@@ -223,8 +223,8 @@ public class StudentController{
    
    
    //sending email
-   @RequestMapping(value = { "/email{address}" }, method = RequestMethod.POST)
-   public String emailSend(@PathVariable String address, @RequestParam String subject,  @RequestParam String content  ){
+   @RequestMapping(value = { "/email" }, method = RequestMethod.POST)
+   public String emailSend(@RequestParam("email") String address, @RequestParam("subject") String subject,  @RequestParam("content") String content  ){
 	   
 
 	   final String username="javacourse2016@gmail.com";
@@ -263,6 +263,7 @@ public class StudentController{
        return "redirect:/student/listall";
 	   
    }
+   
    
    
    

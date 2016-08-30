@@ -21,11 +21,11 @@
         </header>
         <c:import url="../includes/homepage_link.jsp" />   <br>
         
-        <form action="<c:url value="/StudentController"/>" method="post">
+        <form action="<c:url value="email"/>" method="post">
             
             
             <label>To:</label>
-            <input type ="text" name="email" id="email" value="${param.email}"><br><br>
+            <input type ="text" name="email" id="email" value="${email}"><br><br>
             <label>Subject:</label>
             <input type="text" name="subject" id="subject" > <br><br>      
             <textarea name="content" id="content" style="width:450px;height:150px;"></textarea><br> <br>
