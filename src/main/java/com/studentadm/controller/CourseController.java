@@ -207,7 +207,7 @@ public class CourseController{
    
  //Display a course  
    @RequestMapping(value = "courseProcess", params ="search", method = RequestMethod.POST)
-   public String searchCourse(@RequestParam("course_id") int course_id, ModelMap model){
+   public String searchCourse(@RequestParam("course_id") int course_id){
 	   
 	 /*  Course course = courseService.selectById(course_id);
 	   

@@ -41,8 +41,8 @@
                        <td><c:out value ="${st.mark1}" /></td>
                        <td><c:out value ="${st.mark2}" /></td>
                        
-                       <td><a href="<c:url value ='/result/edit${st.student_id}/${st.course_id}'/>">Edit</a></td>
-                       <td><a href="<c:url value ='/result/delete${st.student_id}/${st.course_id}'/>">Delete</a></td>
+                       <td><a href="<c:url value ='/result/edit${st.student_id}-${st.course_id}'/>">Edit</a></td>
+                       <td><a href="<c:url value ='/result/delete${st.student_id}-${st.course_id}'/>">Delete</a></td>
                                                              
 
                    </tr>

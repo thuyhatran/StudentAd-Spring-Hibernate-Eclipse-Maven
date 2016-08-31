@@ -21,7 +21,7 @@
         
         <c:import url="/WEB-INF/views/includes/homepage_link.jsp" />   <br>
         
-          <form action ="<c:url value="/SaveFileController"/>" method ="post"> 
+          <form action ="fileProcess" method ="post"> 
             
             <h3 style="text-align: center">Check the Table(s) you want to Import/Export</h3> 
             
@@ -42,8 +42,8 @@
             </table>
             <br>
             <fieldset style="border:none">
-                <input type ="submit" name ="submit" id="export" value="Export">
-                <input type ="submit" name ="submit" id="import" value="Import"> 
+                <input type ="submit" name ="export" id="export" value="Export">
+                <input type ="submit" name ="import" id="import" value="Import"> 
             </fieldset>
             <br><br>
         </form>

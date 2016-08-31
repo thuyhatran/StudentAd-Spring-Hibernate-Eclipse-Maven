@@ -68,7 +68,7 @@
 	        
 	        <div class="dropdown">
 	          <button class="dropbtn">
-	         	<a style="text-decoration: none; color:white" href="<c:url value ='/WEB-INF/views/JSPs/import_form.jsp' />">Import/Export</a> 
+	         	<a style="text-decoration: none; color:white" href="<c:url value ='/fileProcess' />">Import/Export</a> 
 	          </button>
 	          
 	        </div> 

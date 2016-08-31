@@ -85,7 +85,6 @@ public class StudentController{
    
    
    
-   
    @RequestMapping(value = { "/new" }, method = RequestMethod.GET)
    public String newStudent(ModelMap model) {
 	   
@@ -108,18 +107,6 @@ public class StudentController{
        return "student_form";
    }
    
-   // Insert/save new student
-   @RequestMapping(value={"/new"}, method = RequestMethod.POST)
-   public String insertStudent(Student student){
-	   
-	   studentService.insert(student);
-	   
-	   log.debug(" new student inserted" + student);
-	   
-	   return "redirect:/student/listall";  //after inserting, display all students
-   }
-   
-   
    
    //Update a student
    @RequestMapping(value = {"/edit{student_id}"}, method = RequestMethod.GET)
@@ -137,18 +124,6 @@ public class StudentController{
        model.addAttribute("delete_disabled", "");
 	   
 	   return "student_form";
-	   
-   }
-   
-   //Update a student
-   @RequestMapping(value = {"/edit{student_id}"}, method = RequestMethod.POST)
-   public String updateStudent(Student student){
-	   
-	   studentService.update(student);
-	   
-	   log.debug(" student updated" + student);
-	   
-	   return "redirect:/student/listall";
 	   
    }
    
@@ -193,6 +168,58 @@ public class StudentController{
 
        return "student_form"; 
    }
+   
+   
+ //---------------------------------------------------
+   //
+   // All methods related to button clicked in course_form
+   //
+   //----------------------------------------------------
+   
+   @RequestMapping(value = "studentProcess", params ="new", method = RequestMethod.POST)
+   public String newStudentClicked() {
+       return "redirect:/student/new";
+   }
+   
+   //Update a course
+   @RequestMapping(value = "studentProcess", params ="update", method = RequestMethod.POST)
+   public String updateStudent(Student student){
+	   
+	   studentService.update(student);
+	   
+	   log.debug(" student updated" + student);
+	   
+	   return "redirect:/student/listall";
+	   
+   }
+   
+   //Insert a student
+   @RequestMapping(value = "studentProcess", params ="insert", method = RequestMethod.POST)
+   public String insertStudent(Student student){
+	   
+	   studentService.insert(student);
+	   
+	   log.debug(" new student inserted" + student);
+	   
+	   return "redirect:/student/listall";  //after inserting, display all students
+   }
+   
+  @RequestMapping(value = "studentProcess", params ="delete", method = RequestMethod.POST)
+   public String deleteStudentClicked(@RequestParam("student_id") int student_id){
+	   
+ 
+       return "redirect:/student/delete"+student_id;
+   }
+   
+   
+ //Display a student  
+   @RequestMapping(value = "studentProcess", params ="search", method = RequestMethod.POST)
+   public String searchStudent(@RequestParam("student_id") int student_id){
+	   
+       return "redirect:/student/find"+student_id; 
+   }
+   
+
    
    // Display all grades
    @RequestMapping(value = { "/grades" }, method = RequestMethod.GET)
@@ -269,10 +296,8 @@ public class StudentController{
 	   
    }
    
-   
-   
-   
-   
+
+     
    
    
    /*

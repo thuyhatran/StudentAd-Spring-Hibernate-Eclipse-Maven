@@ -22,7 +22,7 @@
         
         <c:import url="/WEB-INF/views/includes/homepage_link.jsp" />   <br>
         
-        <form name="result_form" action="ResultController" onsubmit="return verify_on_submit()" method="post" >
+        <form name="result_form" action="resultProcess" onsubmit="return verify_on_submit()" method="post" >
         
             <fieldset>
                 <legend style="color:rgb(122,41,70);">Course Informations</legend><br>
@@ -43,13 +43,13 @@
             </fieldset>
 
             <fieldset id="buttons">
-                <input type="submit" name="submit" id="new"    value="New" ${new_disabled}
+                <input type="submit" name="new" id="new"    value="New" ${new_disabled}
                        onclick="whichClicked = this.value">
-                <input type="submit" name="submit" id="insert" value="Insert" ${insert_disabled}
+                <input type="submit" name="insert" id="insert" value="Insert" ${insert_disabled}
                        onclick="whichClicked = this.value">
-                <input type="submit" name="submit" id="update" value="Update" ${update_disabled}>
-                <input type="submit" name="submit" id="delete" value="Delete" ${delete_disabled}>
-                <input type="submit" name="submit" id="search" value="Search" ${search_disabled}
+                <input type="submit" name="update" id="update" value="Update" ${update_disabled}>
+                <input type="submit" name="delete" id="delete" value="Delete" ${delete_disabled}>
+                <input type="submit" name="search" id="search" value="Search" ${search_disabled}
                       onclick="whichClicked = this.value" >
                 <input type="reset" id="reset" value="Reset"><br>
 

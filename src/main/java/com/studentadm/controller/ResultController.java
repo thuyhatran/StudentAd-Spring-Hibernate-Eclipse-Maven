@@ -12,6 +12,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.studentadm.model.Course;
 import com.studentadm.model.Results;
@@ -91,32 +92,9 @@ public class ResultController{
        return "result_form";
    }
    
-   // Insert/save new result
-   @RequestMapping(value={"/new"}, method = RequestMethod.POST)
-   public String insertResult(Results_view result_view, ModelMap model){
-	   
-	   Student st = studentService.selectById(result_view.getStudent_id());
-       Course crs = courseService.selectById(result_view.getCourse_id());
-       
-       if ((st==null) || (crs==null))
-           log.debug("Trying to inserting new result, but Student or Course is null");
-       else{
-       
-           Results result = new Results(result_view.getMark1(),result_view.getMark2());
-           result.setStudent(st);
-           result.setCourse(crs);
-
-           resultService.insert(result);
-           
-           log.debug(" new result inserted" + result);
-       }
-	   
-	   
-	   return "redirect:/result/listall";  //after inserting, display all results
-   }
    
    //Update a result
-   @RequestMapping(value = {"/edit{student_id}/{course_id}"}, method = RequestMethod.GET)
+   @RequestMapping(value = {"/edit{student_id}-{course_id}"}, method = RequestMethod.GET)
    public String editResult(@PathVariable int student_id, @PathVariable int course_id, ModelMap model){
 	   
 	   Results_view result = resultViewService.selectById(student_id, course_id);
@@ -135,34 +113,10 @@ public class ResultController{
 	   
    }
    
-   //Update a result
-   @RequestMapping(value = {"/edit{student_id}/{course_id}"}, method = RequestMethod.POST)
-   public String updateResult(Results_view result_view){
-	   
-	   Student st = studentService.selectById(result_view.getStudent_id());
-       Course crs = courseService.selectById(result_view.getCourse_id());
-       
-	   
-       if ((st==null) || (crs==null))
-           log.debug("Trying to updating result, but Student or Course is null");
-       else{
-       
-           Results result = new Results(result_view.getMark1(),result_view.getMark2());
-           result.setStudent(st);
-           result.setCourse(crs);
-
-           resultService.update(result);
-           
-           log.debug("  result updated" + result);
-       }
-       
-       
-	   return "redirect:/result/listall";
-	   
-   }
+   
    
    //Delete a result  
-   @RequestMapping(value = {"/delete{student_id}/{course_id}"}, method = RequestMethod.GET)
+   @RequestMapping(value = {"/delete{student_id}-{course_id}"}, method = RequestMethod.GET)
    public String deleteResult(@PathVariable int student_id, @PathVariable int course_id){
        
        //delete this result    
@@ -175,7 +129,7 @@ public class ResultController{
    
    
    //Display a result  
-   @RequestMapping(value = {"/find{student_id}/{course_id}"}, method = RequestMethod.GET)
+   @RequestMapping(value = {"/find{student_id}-{course_id}"}, method = RequestMethod.GET)
    public String displayResult(@PathVariable int student_id,@PathVariable int course_id, ModelMap model){
 	   
 	   Results_view result = resultViewService.selectById(student_id,course_id);
@@ -198,6 +152,83 @@ public class ResultController{
 
 
        return "result_form"; 
+   }
+   
+   
+   //---------------------------------------------------
+   //
+   // All methods related to button clicked in result_form
+   //
+   //----------------------------------------------------
+   
+   @RequestMapping(value = {"/resultProcess"}, params ="new", method = RequestMethod.POST)
+   public String newResultClicked() {
+
+       return "redirect:/result/new";
+   }
+   
+   //Update a result
+   @RequestMapping(value = {"/resultProcess"}, params ="update", method = RequestMethod.POST)
+   public String updateResult(Results_view result_view){
+	   
+	   Student st = studentService.selectById(result_view.getStudent_id());
+       Course crs = courseService.selectById(result_view.getCourse_id());
+       
+	   
+       if ((st==null) || (crs==null))
+           log.debug("Trying to updating result, but Student or Course is null");
+       else{
+       
+           Results result = new Results(result_view.getMark1(),result_view.getMark2());
+           result.setStudent(st);
+           result.setCourse(crs);
+
+           resultService.update(result);
+           
+           log.debug("  result updated" + result);
+       }
+       
+	   
+	   return "redirect:/result/listall";
+	   
+   }
+   
+   //Insert a result
+   @RequestMapping(value = {"/resultProcess"}, params ="insert", method = RequestMethod.POST)
+   public String insertResult(Results_view result_view){
+	   
+	   Student st = studentService.selectById(result_view.getStudent_id());
+       Course crs = courseService.selectById(result_view.getCourse_id());
+       
+       if ((st==null) || (crs==null))
+           log.error("Trying to inserting new result, but Student or Course is null");
+       else{
+       
+           Results result = new Results(result_view.getMark1(),result_view.getMark2());
+           result.setStudent(st);
+           result.setCourse(crs);
+
+           resultService.insert(result);
+           
+           log.debug(" new result inserted" + result);
+       }
+	   
+	   
+	   return "redirect:/result/listall";  //after inserting, display all results
+   }
+   
+   @RequestMapping(value = {"/resultProcess"}, params ="delete", method = RequestMethod.POST)
+   public String deleteResultClicked(@RequestParam("student_id") int student_id, @RequestParam("course_id") int course_id){
+	   
+       return "redirect:/result/delete"+student_id+"-"+course_id;
+   }
+   
+   
+  //Display a course  
+   @RequestMapping(value = {"/resultProcess"}, params ="search", method = RequestMethod.POST)
+   public String searchResult(@RequestParam("student_id") int student_id, @RequestParam("course_id") int course_id){
+
+       return "redirect:/result/find"+student_id+"-"+course_id;
    }
    
    
