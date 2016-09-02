@@ -43,26 +43,10 @@
                     <label for "email">Email:</label>
                     <input type="text" name="email" id="email" value="${student.email}">
                     <br><br>
-                    <label for "day">Date:</label>
-                    <input type="text" name="day" id="day" value="${day}" 
-                            pattern="\d{1,2}" placeholder="2 digits" min="1" max="31">
-                    <select name="month" id ="month" value="${month}">
-                            <option value="1">January</option>
-                            <option value="2">February</option>
-                            <option value="3">March</option>
-                            <option value="4">April</option>
-                            <option value="5">May</option>
-                            <option value="6">June</option>
-                            <option value="7">July</option>
-                            <option value="8">August</option>
-                            <option value="9">September</option>
-                            <option value="10">October</option>
-                            <option value="11">November</option>
-                            <option value="12">December</option>
-                    </select>
-                    <input type="text" name="year" id="year" value="${year}"
-                            pattern="\d{4}" placeholder="4 digits">
-
+                    <label for "start_date">Start Date:</label>
+                    <input type="text" name="start_date" id="start_date" value="${student.start_date}" 
+                            pattern="\d{4}-\d{1,2}-\d{1,2}" placeholder="yyyy-MM-dd" >
+                  
                     </fieldset>
 
                     <fieldset id="buttons">

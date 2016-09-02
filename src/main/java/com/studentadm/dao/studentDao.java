@@ -10,12 +10,14 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.sql.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import javax.annotation.Resource;
 
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
@@ -227,7 +229,7 @@ public class StudentDao implements StudentDaoInterface {
 	                String firstname   = st.getFirst_name();
 	                String lastname    = st.getLast_name();
 	                String gender      = st.getGender();
-	                String startdate   = st.getStart_date();
+	                Date startdate   = st.getStart_date();
 	                String email   = st.getEmail();
 	                
 	                fout.println(id+","+firstname +","+lastname+","+gender+","+startdate+","+email);
@@ -273,7 +275,18 @@ public class StudentDao implements StudentDaoInterface {
 	                String first_name = components[1];
 	                String last_name = components[2];    
 	                String gender = components[3];
-	                String start_date = components[4];
+	                
+	                String string_date = components[4];
+	                
+	                DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd"); 
+	                Date start_date= null;
+					try {
+						start_date = (Date) formatter.parse(string_date);
+					} catch (ParseException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} 
+	                
 	                String email = components[5];
 	                              
 	                Student std = new Student(student_id,first_name,last_name,gender,start_date,email);

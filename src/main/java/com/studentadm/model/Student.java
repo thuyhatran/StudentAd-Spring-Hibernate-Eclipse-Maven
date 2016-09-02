@@ -1,6 +1,7 @@
 package com.studentadm.model;
 
 import java.io.Serializable;
+import java.sql.Date;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.Column;
@@ -34,7 +35,7 @@ public class Student implements Serializable {
     private String gender;
     
     @Column(name="start_date")
-    private String start_date;
+    private Date start_date;
     
     @Column(name="email", length=40)
     private String email;
@@ -51,40 +52,45 @@ public class Student implements Serializable {
     
    //contructors
 
-    public Student(int student_id, String first_name, String last_name, String gender, String start_date, String email) {
-       
-        this.student_id = student_id;
-        this.first_name = first_name;
-        this.last_name = last_name;
-        this.gender = gender;
-        this.start_date = start_date;
-        this.email = email;
-    }
-    
-      public Student(String first_name, String last_name, String gender, String start_date, String email) {
-        
-        
-        this.first_name = first_name;
-        this.last_name = last_name;
-        this.gender = gender;
-        this.start_date = start_date;
-        this.email = email;
-    }
 
-       public Student(int student_id,String first_name, String last_name) {
-        
-        this.student_id = student_id;
-        this.first_name = first_name;
-        this.last_name = last_name;
-
-    }
-       
-      
     public Student() {
        
     }
 
-    public Student(int student_id) {
+    public Student(int student_id, String first_name, String last_name, String gender, Date start_date, String email,
+		Set<Results> results) {
+	super();
+	this.student_id = student_id;
+	this.first_name = first_name;
+	this.last_name = last_name;
+	this.gender = gender;
+	this.start_date = start_date;
+	this.email = email;
+	this.results = results;
+}
+    
+    
+
+	public Student(String first_name, String last_name, String gender, Date start_date, String email) {
+		super();
+		this.first_name = first_name;
+		this.last_name = last_name;
+		this.gender = gender;
+		this.start_date = start_date;
+		this.email = email;
+	}
+
+	public Student(int student_id, String first_name, String last_name, String gender, Date start_date, String email) {
+		super();
+		this.student_id = student_id;
+		this.first_name = first_name;
+		this.last_name = last_name;
+		this.gender = gender;
+		this.start_date = start_date;
+		this.email = email;
+	}
+
+	public Student(int student_id) {
       
         this.student_id = student_id;
     }
@@ -121,11 +127,11 @@ public class Student implements Serializable {
         this.gender = gender;
     }
 
-    public String getStart_date() {
+    public Date getStart_date() {
         return start_date;
     }
 
-    public void setStart_date(String start_date) {
+    public void setStart_date(Date start_date) {
         this.start_date = start_date;
     }
 

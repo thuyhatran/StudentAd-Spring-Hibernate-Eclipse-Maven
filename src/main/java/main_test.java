@@ -1,3 +1,5 @@
+import java.util.Date;
+
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.studentadm.dao.CourseDao;
@@ -13,20 +15,22 @@ public class main_test {
 		
 	
 		
-		 ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("appContext.xml");
+		 ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("appContext-servlet.xml");
 		 
-		 CourseService crsService = context.getBean("courseService",CourseService.class);
+		 /*		 CourseService crsService = context.getBean("courseService",CourseService.class);
 		 
 
 		 
-		/* Course crs = new Course(4,"Database");
+		 Course crs = new Course(4,"Database");
 		 crsService.insert(crs);
-		 */
+		 
 		 
 		System.out.println("New course ID: " + crsService.getNewCourseID()); 
 		System.out.println(" course : " +crsService.selectById(2));
 		
-		System.out.println(crsService.select().get(0));
+		System.out.println(crsService.select().get(0));*/
+		
+		
 		
 		 
 	}

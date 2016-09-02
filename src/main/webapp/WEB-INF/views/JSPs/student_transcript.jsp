@@ -71,7 +71,7 @@
                     document.getElementById("year").value = d.getFullYear();
         </script>
                 
-        <p id="date"><script>document.write('Montreal, ' + d.getDate()+'/' + d.getMonth()+1 +'/'+ d.getFullYear());  </script> </p>
+        <p id="date"><script>document.write('Montreal, ' + d.getDate()+'/' + (d.getMonth()+1) +'/'+ d.getFullYear());  </script> </p>
         
     </body>
     
