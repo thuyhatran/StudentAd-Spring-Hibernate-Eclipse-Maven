@@ -89,7 +89,7 @@ public class StudentController{
  
  
    
-   @RequestMapping(value = { "/form" }, method = RequestMethod.GET)
+   @RequestMapping(value = {"/form" }, method = RequestMethod.GET)
    public String formStudent(ModelMap model){
 	   
 	   model.addAttribute("stid_readonly","");  //set student_id field to readonly
@@ -202,7 +202,22 @@ public class StudentController{
    
    //Update a course
    @RequestMapping(value = "studentProcess", params ="update", method = RequestMethod.POST)
-   public String updateStudent(Student student){
+   public String updateStudent(@Valid @ModelAttribute("student") Student student, BindingResult result, ModelMap model){
+	   
+	   if (result.hasErrors()){
+		   
+		   model.addAttribute("student_id",student.getStudent_id());
+		   model.addAttribute("student",student);
+		   model.addAttribute("stid_readonly","");  //set student_id field to readonly
+		   model.addAttribute("new_disabled", "disabled");
+		   model.addAttribute("insert_disabled", "disabled");
+		   model.addAttribute("update_disabled", "");
+		   model.addAttribute("search_disabled", "disabled");
+		   model.addAttribute("delete_disabled", "disabled");
+		   
+		   return "student_form";
+		  
+	   }
 	   
 	   studentService.update(student);
 	   
@@ -226,6 +241,7 @@ public class StudentController{
 		   model.addAttribute("delete_disabled", "disabled");
 		   
 		   return "student_form";
+		  
 	   }
 	   
 	   studentService.insert(student);
