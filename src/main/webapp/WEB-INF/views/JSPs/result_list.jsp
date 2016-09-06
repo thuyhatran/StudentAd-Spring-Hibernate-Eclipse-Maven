@@ -34,15 +34,15 @@
                    
                    <th colspan="2">Action</th>
                </tr>
-               <c:forEach var="st" items="${results}">
+               <c:forEach var="rls" items="${results}">
                    <tr>
-                       <td><c:out value ="${st.student_id}" /></td>
-                       <td><c:out value ="${st.course_id}" /></td>
-                       <td><c:out value ="${st.mark1}" /></td>
-                       <td><c:out value ="${st.mark2}" /></td>
+                       <td><c:out value ="${rls.student_id}" /></td>
+                       <td><c:out value ="${rls.course_id}" /></td>
+                       <td><c:out value ="${rls.mark1}" /></td>
+                       <td><c:out value ="${rls.mark2}" /></td>
                        
-                       <td><a href="<c:url value ='/result/edit${st.student_id}-${st.course_id}'/>">Edit</a></td>
-                       <td><a href="<c:url value ='/result/delete${st.student_id}-${st.course_id}'/>">Delete</a></td>
+                       <td><a href="<c:url value ='/result/edit${rls.student_id}-${rls.course_id}'/>">Edit</a></td>
+                       <td><a href="<c:url value ='/result/delete${rls.student_id}-${rls.course_id}'/>">Delete</a></td>
                                                              
 
                    </tr>

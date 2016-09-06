@@ -89,6 +89,7 @@
 	<!-- Spring MVC -->
 	
 	<mvc:annotation-driven />
+	
         
     <bean id="viewResolver"
           class="org.springframework.web.servlet.view.InternalResourceViewResolver"
@@ -96,6 +97,29 @@
           p:suffix=".jsp" />
           
 	
+	<!-- Spring MVC - Language -->
+	
+	<bean id="localeResolver"
+		class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
+		<property name="defaultLocale" value="en" />
+	</bean>
+
+	    
+  	<mvc:interceptors>
+ 		
+ 		<bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+			<property name="paramName" value="siteLanguage" />
+		</bean>
+		 		
+  	</mvc:interceptors>   
+	
+	
+	 <mvc:resources location="/WEB-INF/views/" mapping="/resources/**"></mvc:resources>
+    
+     <bean id="messageSource"
+   		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+  		<property name="basename" value="/WEB-INF/views/main_lang" />
+   	</bean>
 	
 	
 </beans>

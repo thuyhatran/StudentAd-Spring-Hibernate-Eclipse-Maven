@@ -17,13 +17,16 @@ import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -61,7 +64,7 @@ public class StudentController{
 		
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 		binder.registerCustomEditor(Date.class, "start_date", new CustomDateEditor(dateFormat, false));
-	
+
 	}
 	
 	
@@ -211,7 +214,19 @@ public class StudentController{
    
    //Insert a student
    @RequestMapping(value = "studentProcess", params ="insert", method = RequestMethod.POST)
-   public String insertStudent(Student student){
+   public String insertStudent(@Valid @ModelAttribute("student") Student student, BindingResult result, ModelMap model){
+	   
+	   if (result.hasErrors()){
+		   
+		   model.addAttribute("stid_readonly","");  //set student_id field to readonly
+		   model.addAttribute("new_disabled", "");
+		   model.addAttribute("insert_disabled", "disabled");
+		   model.addAttribute("update_disabled", "disabled");
+		   model.addAttribute("search_disabled", "");
+		   model.addAttribute("delete_disabled", "disabled");
+		   
+		   return "student_form";
+	   }
 	   
 	   studentService.insert(student);
 	   

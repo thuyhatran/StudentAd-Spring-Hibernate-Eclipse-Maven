@@ -6,7 +6,10 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<!DOCTYPE html>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"  %>
+<%@ taglib prefix="spring"  uri="http://www.springframework.org/tags" %>
+ 
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 	<head>
 	  <!--  <link rel="stylesheet" type="text/css" href="CSSs/main_styles.css">  --> 
@@ -15,21 +18,26 @@
  		
  		<style type="text/css">	<%@include file="/WEB-INF/views/CSSs/main_styles.css" %></style>
     
-	   
+	    
+ 
 	   <title>Student Administration</title>
 	    
-	</head>
-	
+	</head>	
 	
 	<body>
+		
 	    <header> 
 	    
 	          <c:import url="/WEB-INF/views/includes/header.jsp" />
 	        
 	    </header>
-	    
-	    <section>
 
+	    <section>
+	    
+	    	<a href="?siteLanguage=en">English</a>|
+ 			<a href="?siteLanguage=fr">Francais</a>
+			
+		<%-- 	<spring:message code="label.headline"/>  --%>
 	        
 	        <h2 style="text-align: center; color:green">Student Administration</h2>
 	        <div class="dropdown">

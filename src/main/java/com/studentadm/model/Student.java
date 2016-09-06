@@ -10,6 +10,11 @@ import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
+
 
 /**
 *
@@ -25,18 +30,22 @@ public class Student implements Serializable {
     @Id                      
     private int student_id;
     
+    @Size(min=1, max=40) // Spring MVC Form validation .jar file requried
     @Column(name="first_name", length=40)
     private String first_name;
     
+    @NotEmpty //Hibernate validation - .jar file required
     @Column(name="last_name", length=40)
     private String last_name;
     
     @Column(name="gender", length=1)
     private String gender;
     
+   
     @Column(name="start_date")
     private Date start_date;
     
+    @Email  //Hibernate validation
     @Column(name="email", length=40)
     private String email;
     
@@ -48,7 +57,6 @@ public class Student implements Serializable {
    // @Fetch(FetchMode.SELECT)
     private Set<Results> results = new HashSet<Results>();;
 
-    
     
    //contructors
 
@@ -152,9 +160,6 @@ public class Student implements Serializable {
         this.results = results;
     }
 
-    
-    
-    
     
     @Override
     public String toString() {

@@ -6,6 +6,8 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="form"  uri="http://www.springframework.org/tags/form" %>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -31,9 +33,11 @@
                     <br><br>
                     <label for "first_name">First Name:</label>
                     <input type="text" name="first_name" id="first_name" value="${student.first_name}" >
+                    <form:errors path="student.first_name"/>
                     <br><br>
                     <label for "last_name">Last Name:</label>
                     <input type="text" name="last_name" id="lastname" value="${student.last_name}">
+                    <form:errors path="student.last_name"/>
                     <br><br>
                     <label for "gender">Gender:</label>
                     <select name=gender id="gender" value="${student.gender}">
@@ -42,10 +46,12 @@
                     </select><br><br>
                     <label for "email">Email:</label>
                     <input type="text" name="email" id="email" value="${student.email}">
+                    <form:errors path="student.email"/>
                     <br><br>
                     <label for "start_date">Start Date:</label>
                     <input type="text" name="start_date" id="start_date" value="${student.start_date}" 
-                            pattern="\d{4}-\d{1,2}-\d{1,2}" placeholder="yyyy-MM-dd" >
+                           placeholder="yyyy-MM-dd" >
+                    <form:errors path="student.start_date"/>
                   
                     </fieldset>
 

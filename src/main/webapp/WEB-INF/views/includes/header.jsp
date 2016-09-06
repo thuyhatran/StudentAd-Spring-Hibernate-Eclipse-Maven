@@ -30,7 +30,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>   
-	
         YOYO College<br>
         2576 rue Sherbrooke West, Montreal - (514)-555-7777     
     
