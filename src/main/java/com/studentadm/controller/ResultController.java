@@ -176,7 +176,7 @@ public class ResultController{
        
 	   
        if ((st==null) || (crs==null))
-           log.debug("Trying to updating result, but Student or Course is null");
+           log.debug("Trying to updating result, but this Student ID or Course IS is not exist");
        else{
        
            Results result = new Results(result_view.getMark1(),result_view.getMark2());
@@ -188,7 +188,6 @@ public class ResultController{
            log.debug("  result updated" + result);
        }
        
-	   
 	   return "redirect:/result/listall";
 	   
    }
@@ -201,7 +200,7 @@ public class ResultController{
        Course crs = courseService.selectById(result_view.getCourse_id());
        
        if ((st==null) || (crs==null))
-           log.error("Trying to inserting new result, but Student or Course is null");
+           log.error("Trying to inserting new result, but this Student ID or Course IS is not exist");
        else{
        
            Results result = new Results(result_view.getMark1(),result_view.getMark2());
@@ -212,8 +211,7 @@ public class ResultController{
            
            log.debug(" new result inserted" + result);
        }
-	   
-	   
+	      
 	   return "redirect:/result/listall";  //after inserting, display all results
    }
    
@@ -231,8 +229,6 @@ public class ResultController{
        return "redirect:/result/find"+student_id+"-"+course_id;
    }
    
-   
 
-    
  
 }

@@ -42,12 +42,9 @@ input, select{
     width: 6em;
     margin-top:0.8em;}
 	
-#day{
-	width:2em;
-}
-#month,#student_id,#gender{
+
+#student_id{
 	width:7em;
 }
-#year{
-	width:4em;
-}
+
+

@@ -34,10 +34,10 @@
 
 	    <section>
 	    
-	    	<a href="?siteLanguage=en">English</a>|
- 			<a href="?siteLanguage=fr">Francais</a>
+	    	<%-- <a href="/StudentApp?siteLanguage=en">English</a>|
+ 			<a href="/StudentApp?siteLanguage=fr">Francais</a>
 			
-		<%-- 	<spring:message code="label.headline"/>  --%>
+			<spring:message code="label.headline"/>   --%>
 	        
 	        <h2 style="text-align: center; color:green">Student Administration</h2>
 	        <div class="dropdown">
