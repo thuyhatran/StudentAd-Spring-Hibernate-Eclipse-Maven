@@ -25,8 +25,8 @@
         
 		<c:import url="/WEB-INF/views/includes/homepage_link.jsp" />
 		<div align="right"> 
-		<a href="/StudentApp/student/form?siteLanguage=en">English</a>|
-		<a href="/StudentApp/student/form?siteLanguage=fr">Francais</a>
+		<a href="?siteLanguage=en">English</a>|
+		<a href="?siteLanguage=fr">Francais</a>
 		</div>
 		 		
         <form action="studentProcess" method="post">
