@@ -24,7 +24,7 @@ import javax.persistence.Transient;
 
 @SuppressWarnings("serial")
 @Entity
-@Table(name="RESULTS1")
+@Table(name="RESULTS")
 @AssociationOverrides({
 		@AssociationOverride(name = "pk.student", 
 			joinColumns = @JoinColumn(name = "student_id")),

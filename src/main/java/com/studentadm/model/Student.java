@@ -25,7 +25,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 @SuppressWarnings("serial")
 @Entity
-@Table(name="STUDENT1")
+@Table(name="STUDENT")
 public class Student implements Serializable {
     @Id                      
     private int student_id;

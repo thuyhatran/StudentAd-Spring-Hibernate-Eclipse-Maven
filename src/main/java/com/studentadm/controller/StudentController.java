@@ -214,6 +214,7 @@ public class StudentController{
 		   model.addAttribute("update_disabled", "");
 		   model.addAttribute("search_disabled", "disabled");
 		   model.addAttribute("delete_disabled", "disabled");
+		 
 		   
 		   return "student_form";
 		  
@@ -233,11 +234,13 @@ public class StudentController{
 	   
 	   if (result.hasErrors()){
 		   
+		   model.addAttribute("student_id",student.getStudent_id());
+		   model.addAttribute("student",student);  
 		   model.addAttribute("stid_readonly","");  //set student_id field to readonly
-		   model.addAttribute("new_disabled", "");
-		   model.addAttribute("insert_disabled", "disabled");
+		   model.addAttribute("new_disabled", "disabled");
+		   model.addAttribute("insert_disabled", "");
 		   model.addAttribute("update_disabled", "disabled");
-		   model.addAttribute("search_disabled", "");
+		   model.addAttribute("search_disabled", "disabled");
 		   model.addAttribute("delete_disabled", "disabled");
 		   
 		   return "student_form";

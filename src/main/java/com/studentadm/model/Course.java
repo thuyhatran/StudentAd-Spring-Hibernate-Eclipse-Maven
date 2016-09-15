@@ -22,7 +22,7 @@ import javax.persistence.Table;
  */
 @SuppressWarnings("serial")
 @Entity
-@Table(name="COURSE1")
+@Table(name="COURSE")
 public class Course implements Serializable {
      @Id                      
     private int course_id;

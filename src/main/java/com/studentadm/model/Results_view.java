@@ -8,7 +8,7 @@ package com.studentadm.model;
 /**
  *
  * @author Thuy Ha
- * This class is created to have a compatible with current VIEW (JSPs file)
+ * This class is created to have a compatible view with current VIEW (JSPs file)
  */
 public class Results_view {
     private int student_id;

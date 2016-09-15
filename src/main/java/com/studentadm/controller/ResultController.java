@@ -176,7 +176,7 @@ public class ResultController{
        
 	   
        if ((st==null) || (crs==null))
-           log.debug("Trying to updating result, but this Student ID or Course IS is not exist");
+           log.error("Trying to updating result, but this Student ID or Course IS is not exist");
        else{
        
            Results result = new Results(result_view.getMark1(),result_view.getMark2());

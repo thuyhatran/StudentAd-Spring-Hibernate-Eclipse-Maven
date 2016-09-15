@@ -32,7 +32,7 @@ import com.studentadm.model.StudentsGrade;
  * @author Thuy Ha
  */
 
-@Repository("stDao")
+@Repository
 public class StudentDao implements StudentDaoInterface {
 
 		private SessionFactory sessionFactory;
