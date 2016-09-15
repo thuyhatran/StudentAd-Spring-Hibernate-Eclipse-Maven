@@ -295,10 +295,12 @@ public class StudentController{
    }
    
    //Open email form
-   @RequestMapping(value = { "/email{address}" }, method = RequestMethod.GET)
+   @RequestMapping(value = { "/email{address}/" }, method = RequestMethod.GET)
    public String emailForm(@PathVariable String address, ModelMap model) {  
               
        model.addAttribute("email", address);
+       
+       log.error(address);
        
        return "email_form";
    }
@@ -306,6 +308,8 @@ public class StudentController{
    
    //sending email
    @RequestMapping(value = { "/email" }, method = RequestMethod.POST)
+   // or use  @RequestMapping(value = { "/email{address}/" }, method = RequestMethod.POST)
+   // and change in email_form.jsp to:  <form action="<c:url value=""/>" method="post">
    public String emailSend(@RequestParam("email") String address, @RequestParam("subject") String subject,  @RequestParam("content") String content  ){
 	   
 

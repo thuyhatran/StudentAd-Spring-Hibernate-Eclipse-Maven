@@ -21,7 +21,7 @@
         </header>
         <c:import url="../includes/homepage_link.jsp" />   <br>
         
-        <form action="<c:url value="email"/>" method="post">
+        <form action="<c:url value="/student/email"/>" method="post">
             
             
             <label>To:</label>

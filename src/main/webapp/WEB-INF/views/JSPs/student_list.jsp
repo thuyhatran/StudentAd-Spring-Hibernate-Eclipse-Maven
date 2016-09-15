@@ -45,7 +45,7 @@
                         
                        <td><a href="<c:url value ='/student/edit${st.student_id}'/>">Edit</a></td>
                        <td><a href="<c:url value ='/student/delete${st.student_id}'/>">Delete</a></td>
-                       <td><a href="<c:url value ='/student/email${st.email}'/>">Email</a></td>
+                       <td><a href="<c:url value ='/student/email${st.email}/'/>">Email</a></td>
                        <td><a href="<c:url value ='/student/transcript${st.student_id}'/>">Transcript</a></td>
                       
 
